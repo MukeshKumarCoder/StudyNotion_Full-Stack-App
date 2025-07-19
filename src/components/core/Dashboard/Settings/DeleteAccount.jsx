@@ -12,7 +12,7 @@ const DeleteAccount = () => {
 
   const handleDeleteAccount = async () => {
     try {
-      dispatch(deleteProfile(token, navigate));
+      await dispatch(deleteProfile(token, navigate));
     } catch (error) {
       console.log("ERROR MESSAGE", error.message);
     }
@@ -23,7 +23,7 @@ const DeleteAccount = () => {
         <FiTrash2 className="text-3xl text-pink-200" />
       </div>
       <div className="flex flex-col space-y-2">
-        <h2 className="text-lg font-semibold text-richblack-5">
+        <h2 className="text-lg font-semibold text-richBlack-5">
           Delete Account
         </h2>
         <div className="w-3/5 text-pink-25">

@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FiUpload } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import IconBtn from "../../../common/IconBtn";
-import { updateDisplayPiture } from "../../../../services/operations/SettingsAPI";
+import { updateDisplayPicture } from "../../../../services/operations/SettingsAPI";
+import { useNavigate } from "react-router-dom";
 
 const ChangeProfilePicture = () => {
   const { token } = useSelector((state) => state.auth);
   const { user } = useSelector((state) => state.profile);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [imageFile, setImageFile] = useState(null);
   const [previewSource, setPreviewSource] = useState(null);
@@ -37,12 +39,10 @@ const ChangeProfilePicture = () => {
 
   const handleFileUpload = () => {
     try {
-      console.log("uploading...");
       setLoading(true);
       const formData = new FormData();
       formData.append("displayPicture", imageFile);
-      // console.log("formdata", formData)
-      dispatch(updateDisplayPicture(token, formData)).then(() => {
+      dispatch(updateDisplayPicture(token, navigate, formData)).then(() => {
         setLoading(false);
       });
     } catch (error) {
@@ -56,7 +56,7 @@ const ChangeProfilePicture = () => {
     }
   }, [imageFile]);
   return (
-    <div className="flex items-center justify-between rounded-md border-[1px] border-richblack-700 bg-richblack-800 p-8 px-12 text-richblack-5">
+    <div className="flex items-center justify-between rounded-md border-[1px] border-richBlack-700 bg-richBlack-800 p-8 px-12 text-richBlack-5">
       <div className="flex items-center gap-x-4">
         <img
           src={previewSource || user?.image}
@@ -76,7 +76,7 @@ const ChangeProfilePicture = () => {
             <button
               onClick={handleClick}
               disabled={loading}
-              className="cursor-pointer rounded-md bg-richblack-700 py-2 px-5 font-semibold text-richblack-50"
+              className="cursor-pointer rounded-md bg-richBlack-700 py-2 px-5 font-semibold text-richBlack-50"
             >
               Select
             </button>
@@ -84,7 +84,7 @@ const ChangeProfilePicture = () => {
               text={loading ? "Uploading..." : "Upload"}
               onclick={handleFileUpload}
             >
-              {!loading && <FiUpload className="text-lg text-richblack-900" />}
+              {!loading && <FiUpload className="text-lg text-richBlack-900" />}
             </IconBtn>
           </div>
         </div>

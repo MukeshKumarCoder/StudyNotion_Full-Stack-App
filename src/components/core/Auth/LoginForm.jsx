@@ -35,7 +35,7 @@ const LoginForm = () => {
       <div className="w-full">
         <label
           htmlFor="email"
-          className="mb-1 text-[0.75rem] leading[1.375rem] text-richblack-5 "
+          className="mb-1 text-[0.75rem] leading[1.375rem] text-richBlack-5 "
         >
           Email Address <sup className="text-pink-200">*</sup>
         </label>
@@ -50,13 +50,13 @@ const LoginForm = () => {
           style={{
             boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)",
           }}
-          className="w-full rounded-[0.5rem] bg-richblack-800 p-[12px] text-richblack-5 "
+          className="w-full rounded-[0.5rem] bg-richBlack-800 p-[12px] text-richBlack-5 "
         />
       </div>
       <div className="w-full relative">
         <label
           htmlFor="password"
-          className="mb-1 text-[0.75rem] leading[1.375rem] text-richblack-5 "
+          className="mb-1 text-[0.75rem] leading[1.375rem] text-richBlack-5 "
         >
           password <sup className="text-pink-200">*</sup>
         </label>
@@ -71,7 +71,7 @@ const LoginForm = () => {
           style={{
             boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)",
           }}
-          className="w-full rounded-[0.5rem] bg-richblack-800 p-[12px] text-richblack-5 "
+          className="w-full rounded-[0.5rem] bg-richBlack-800 p-[12px] text-richBlack-5 "
         />
         <span
           onClick={() => setShowPassword(!showPassword)}
@@ -85,12 +85,12 @@ const LoginForm = () => {
         </span>
         <div className="flex justify-between items-center mt-2 px-2">
           <Link to="/signup">
-            <p className="mt-1 ml-auto max-w-max text-xs text-blue-100 border-b border-richblack-25 pb-[1px] ">
+            <p className="mt-1 ml-auto max-w-max text-xs text-blue-100 border-b border-richBlack-25 pb-[1px] ">
               Don't have an Account
             </p>
           </Link>
           <Link to="/forgot-password">
-            <p className="mt-1 ml-auto max-w-max text-xs text-blue-100 border-b border-richblack-25 pb-[1px] ">
+            <p className="mt-1 ml-auto max-w-max text-xs text-blue-100 border-b border-richBlack-25 pb-[1px] ">
               Forgot Password
             </p>
           </Link>
@@ -98,7 +98,7 @@ const LoginForm = () => {
       </div>
       <button
         type="submit"
-        className="mt-6 rounded-[8px] bg-yellow-50 py-[8px] px-[12px] font-medium text-richblack-900 "
+        className="mt-6 rounded-[8px] bg-yellow-50 py-[8px] px-[12px] font-medium text-richBlack-900 "
       >
         Login
       </button>

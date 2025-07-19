@@ -11,7 +11,7 @@ module.exports = {
       white: "#fff",
       black: "#000",
       transparent: "#ffffff00",
-      richblack: {
+      richBlack: {
         5: "#F1F2FF",
         25: "#DBDDEA",
         50: "#C5C7D4",
@@ -53,7 +53,7 @@ module.exports = {
         800: "#022B32",
         900: "#001B1D",
       },
-      caribbeangreen: {
+      caribBeanGreen: {
         5: "#C1FFFD",
         25: "#83F1DE",
         50: "#44E4BF",
