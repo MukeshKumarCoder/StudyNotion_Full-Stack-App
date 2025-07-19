@@ -1,6 +1,6 @@
 import React from "react";
-import HighlightText from "../HomePage/HighlightText";
-import CTAButton from "../../../components/core/HomePage/CTAButton";
+import HighlightText from "../../core/HomePage/HighlightText";
+import CTAButton from "../../core/HomePage/CTAButton";
 import { LearningGridArray } from "../../../data/LearningGridData";
 
 const LearningGrid = () => {
@@ -12,9 +12,9 @@ const LearningGrid = () => {
             key={i}
             className={`${i === 0 && "xl:col-span-2 xl:h-[294px]"}  ${
               card.order % 2 === 1
-                ? "bg-richblack-700 h-[294px]"
+                ? "bg-richBlack-700 h-[294px]"
                 : card.order % 2 === 0
-                ? "bg-richblack-800 h-[294px]"
+                ? "bg-richBlack-800 h-[294px]"
                 : "bg-transparent"
             } ${card.order === 3 && "xl:col-start-2"}  `}
           >
@@ -24,21 +24,21 @@ const LearningGrid = () => {
                   {card.heading}
                   <HighlightText text={card.highlightText} />
                 </div>
-                <p className="text-richblack-300 font-medium">
+                <p className="text-richBlack-300 font-medium">
                   {card.description}
                 </p>
 
                 <div className="w-fit mt-2">
-                  <CTAButton active={true} linkto={card.BtnLink}>
+                  <CTAButton active={true} linkTo={card.BtnLink}>
                     {card.BtnText}
                   </CTAButton>
                 </div>
               </div>
             ) : (
               <div className="p-8 flex flex-col gap-8">
-                <h1 className="text-richblack-5 text-lg">{card.heading}</h1>
+                <h1 className="text-richBlack-5 text-lg">{card.heading}</h1>
 
-                <p className="text-richblack-300 font-medium">
+                <p className="text-richBlack-300 font-medium">
                   {card.description}
                 </p>
               </div>

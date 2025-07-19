@@ -1,6 +1,6 @@
 import { toast } from "react-hot-toast";
 import { setUser } from "../../slices/profileSlice";
-import { apiConnector } from "../apiconnector";
+import { apiConnector } from "../apiConnector";
 import { settingsEndpoints } from "../apis";
 import { logout } from "./authAPI";
 
@@ -11,7 +11,7 @@ const {
   DELETE_PROFILE_API,
 } = settingsEndpoints;
 
-export const updateDisplayPicture = (token, formData) => {
+export const updateDisplayPicture = (token, navigate, formData) => {
   return async (dispatch) => {
     const toastId = toast.loading("Loading...");
     try {
@@ -24,25 +24,23 @@ export const updateDisplayPicture = (token, formData) => {
           Authorization: `Bearer ${token}`,
         }
       );
-      console.log(
-        "UPDATE_DISPLAY_PICTURE_API API RESPONSE............",
-        response
-      );
+      // console.log("UPDATE_DISPLAY_PICTURE_API API RESPONSE...", response);
 
       if (!response.data.success) {
         throw new Error(response.data.message);
       }
       toast.success("Display Picture Updated Successfully");
       dispatch(setUser(response.data.data));
+      navigate("/dashboard/my-profile");
     } catch (error) {
-      console.log("UPDATE_DISPLAY_PICTURE_API API ERROR............", error);
+      // console.log("UPDATE_DISPLAY_PICTURE_API API ERROR............", error);
       toast.error("Could Not Update Display Picture");
     }
     toast.dismiss(toastId);
   };
 };
 
-export const updateProfile = (token, formData) => {
+export const updateProfile = (token, navigate, formData) => {
   return async (dispatch) => {
     const toastId = toast.loading("Loading...");
     try {
@@ -54,14 +52,15 @@ export const updateProfile = (token, formData) => {
       if (!response.data.success) {
         throw new Error(response.data.message);
       }
-
       const userImage = response.data.updatedUserDetails.image
         ? response.data.updatedUserDetails.image
         : `https://api.dicebear.com/5.x/initials/svg?seed=${response.data.updatedUserDetails.firstName} ${response.data.updatedUserDetails.lastName}`;
       dispatch(
         setUser({ ...response.data.updatedUserDetails, image: userImage })
       );
+      // console.log(userImage);
       toast.success("Profile Updated Successfully");
+      navigate("/dashboard/my-profile");
     } catch (error) {
       console.log("UPDATE_PROFILE_API API ERROR............", error);
       toast.error("Could Not Update Profile");
@@ -70,20 +69,21 @@ export const updateProfile = (token, formData) => {
   };
 };
 
-export const changePassword = async (token, formData) => {
+export const changePassword = async (token, navigate, formData) => {
   const toastId = toast.loading("Loading...");
   try {
     const response = await apiConnector("POST", CHANGE_PASSWORD_API, formData, {
       Authorization: `Bearer ${token}`,
     });
-    console.log("CHANGE_PASSWORD_API API RESPONSE............", response);
+    // console.log("CHANGE_PASSWORD_API API RESPONSE............", response);
 
     if (!response.data.success) {
       throw new Error(response.data.message);
     }
     toast.success("Password Changed Successfully");
+    navigate("/dashboard/my-profile")
   } catch (error) {
-    console.log("CHANGE_PASSWORD_API API ERROR............", error);
+    // console.log("CHANGE_PASSWORD_API API ERROR............", error);
     toast.error(error.response.data.message);
   }
   toast.dismiss(toastId);
@@ -96,7 +96,7 @@ export const deleteProfile = (token, navigate) => {
       const response = await apiConnector("DELETE", DELETE_PROFILE_API, null, {
         Authorization: `Bearer ${token}`,
       });
-      console.log("DELETE_PROFILE_API API RESPONSE............", response);
+      // console.log("DELETE_PROFILE_API API RESPONSE............", response);
 
       if (!response.data.success) {
         throw new Error(response.data.message);
@@ -104,7 +104,7 @@ export const deleteProfile = (token, navigate) => {
       toast.success("Profile Deleted Successfully");
       dispatch(logout(navigate));
     } catch (error) {
-      console.log("DELETE_PROFILE_API API ERROR............", error);
+      // console.log("DELETE_PROFILE_API API ERROR............", error);
       toast.error("Could Not Delete Profile");
     }
     toast.dismiss(toastId);

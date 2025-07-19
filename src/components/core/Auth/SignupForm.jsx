@@ -90,7 +90,7 @@ const SignupForm = () => {
           <div>
             <label
               htmlFor="firstName"
-              className="mb-1 text-[0.875rem] leading-[1.375rem] text-richblack-5"
+              className="mb-1 text-[0.875rem] leading-[1.375rem] text-richBlack-5"
             >
               First Name <sup className="text-pink-200">*</sup>
             </label>
@@ -102,16 +102,13 @@ const SignupForm = () => {
               value={firstName}
               onChange={handleOnChange}
               placeholder="Enter first Name"
-              style={{
-                boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)",
-              }}
-              className="w-full rounded-[0.5rem] bg-richblack-800 p-[12px] text-richblack-5"
+              className="w-full form-style"
             />
           </div>
           <div>
             <label
               htmlFor="lastName"
-              className="mb-1 text-[0.875rem] leading-[1.375rem] text-richblack-5"
+              className="mb-1 text-[0.875rem] leading-[1.375rem] text-richBlack-5"
             >
               Last Name <sup className="text-pink-200">*</sup>
             </label>
@@ -123,17 +120,14 @@ const SignupForm = () => {
               value={lastName}
               onChange={handleOnChange}
               placeholder="Enter Last Name"
-              style={{
-                boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)",
-              }}
-              className="w-full rounded-[0.5rem] bg-richblack-800 p-[12px] text-richblack-5"
+              className="w-full form-style"
             />
           </div>
         </div>
         <div className="w-full">
           <label
             htmlFor="email"
-            className="mb-1 text-[0.875rem] leading-[1.375rem] text-richblack-5"
+            className="mb-1 text-[0.875rem] leading-[1.375rem] text-richBlack-5"
           >
             Email <sup className="text-pink-200">*</sup>
           </label>
@@ -145,16 +139,13 @@ const SignupForm = () => {
             value={email}
             onChange={handleOnChange}
             placeholder="Enter email address"
-            style={{
-              boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)",
-            }}
-            className="w-full rounded-[0.5rem] bg-richblack-800 p-[12px] text-richblack-5"
+           className="w-full form-style"
           />
         </div>
         <div className="flex gap-x-4">
           <div className="relative">
             <label
-              className="mb-1 text-[0.875rem] leading-[1.375rem] text-richblack-5"
+              className="mb-1 text-[0.875rem] leading-[1.375rem] text-richBlack-5"
               htmlFor="password"
             >
               Create Password
@@ -168,10 +159,7 @@ const SignupForm = () => {
               value={password}
               onChange={handleOnChange}
               placeholder="Enter Password"
-              style={{
-                boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)",
-              }}
-              className="w-full rounded-[0.5rem] bg-richblack-800 p-[12px] pr-10 text-richblack-5"
+              className="w-full form-style"
             />
             <span
               onClick={() => setShowPassword((prev) => !prev)}
@@ -186,7 +174,7 @@ const SignupForm = () => {
           </div>
           <div className="relative">
             <label
-              className="mb-1 text-[0.875rem] leading-[1.375rem] text-richblack-5"
+              className="mb-1 text-[0.875rem] leading-[1.375rem] text-richBlack-5"
               htmlFor="confirmPassword"
             >
               Confirm Password
@@ -200,10 +188,7 @@ const SignupForm = () => {
               value={confirmPassword}
               onChange={handleOnChange}
               placeholder="Confirm Password"
-              style={{
-                boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)",
-              }}
-              className="w-full rounded-[0.5rem] bg-richblack-800 p-[12px] pr-10 text-richblack-5"
+             className="w-full form-style !pr-10"
             />
             <span
               onClick={() => setShowConfirmPassword((prev) => !prev)}
@@ -216,7 +201,7 @@ const SignupForm = () => {
               )}
             </span>
             <Link to="/login">
-              <p className="mt-1 ml-auto max-w-max text-xs text-blue-100 border-b border-richblack-25 py-[1px] ">
+              <p className="mt-1 ml-auto max-w-max text-xs text-blue-100 border-b border-richBlack-25 py-[1px] ">
                 Already have an Account
               </p>
             </Link>
@@ -224,7 +209,7 @@ const SignupForm = () => {
         </div>
         <button
           type="submit"
-          className="mt-6 rounded-[8px] bg-yellow-50 py-[8px] px-[12px] font-medium text-richblack-900"
+          className="mt-6 rounded-[8px] bg-yellow-50 py-[8px] px-[12px] font-medium text-richBlack-900"
         >
           Create Account
         </button>

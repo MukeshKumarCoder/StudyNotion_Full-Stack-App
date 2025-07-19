@@ -1,6 +1,6 @@
 import { toast } from "react-hot-toast";
 import { setLoading, setUser } from "../../slices/profileSlice";
-import { apiConnector } from "../apiconnector";
+import { apiConnector } from "../apiConnector";
 import { profileEndpoints } from "../apis";
 import { logout } from "./authAPI";
 
@@ -15,7 +15,7 @@ export const getUserDetails = (token, navigate) => {
     const toastId = toast.loading("Loading...");
     dispatch(setLoading(true));
     try {
-      const response = await apiConnector("GET", GET_USER_DETAILS_API, NULL, {
+      const response = await apiConnector("GET", GET_USER_DETAILS_API, null, {
         Authorization: `Bearer ${token}`,
       });
       //   console.log("GET_USER_DETAILS API RESPONSE............", response);
@@ -29,8 +29,8 @@ export const getUserDetails = (token, navigate) => {
       dispatch(setUser({ ...response.data.data, image: userImage }));
     } catch (error) {
       dispatch(logout(navigate));
-      //   console.log("GET_USER_DETAILS API ERROR............", error);
       toast.error("Could Not Get User Details");
+      //   console.log("GET_USER_DETAILS API ERROR............", error);
     }
     toast.dismiss(toastId);
     dispatch(setLoading(false));
@@ -49,6 +49,7 @@ export const getUserEnrolledCourses = async (token) => {
         Authorization: `Bearer ${token}`,
       }
     );
+    
     if (!response.data.success) {
       throw new Error(response.data.message);
     }

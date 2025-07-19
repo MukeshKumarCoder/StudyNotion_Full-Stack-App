@@ -13,6 +13,7 @@ const codeBlocks = ({
   backgroundGradient,
   codeColor,
 }) => {
+  
   return (
     <div
       className={`flex ${position} my-20 justify-between flex-col lg:gap-10 gap-10`}
@@ -22,19 +23,19 @@ const codeBlocks = ({
         {heading}
 
         {/* Sub Heading */}
-        <div className="-mt-3 w-[85%] text-base font-bold text-richblack-300">
+        <div className="-mt-3 w-[85%] text-base font-bold text-richBlack-300">
           {subHeading}
         </div>
 
         {/* Button Group */}
         <div className="mt-7 flex gap-7">
-          <CTAButton active={ctaBtn1.active} linkto={ctaBtn1.link}>
+          <CTAButton active={ctaBtn1.active} linkTo={ctaBtn1.link}>
             <div className="flex items-center gap-2">
               {ctaBtn1.btnText}
               <FaArrowRight />
             </div>
           </CTAButton>
-          <CTAButton active={ctaBtn2.active} linkto={ctaBtn2.link}>
+          <CTAButton active={ctaBtn2.active} linkTo={ctaBtn2.link}>
             {ctaBtn2.btnText}
           </CTAButton>
         </div>
@@ -44,7 +45,7 @@ const codeBlocks = ({
       <div className="code-border relative flex h-fit w-[100%] flex-row py-3 text-[10px] leading-[18px] sm:text-sm sm:leading-6 lg:w-[470px]">
         {backgroundGradient}
         {/* Indexing */}
-        <div className="flex w-[10%] select-none   flex-col text-center font-inter font-bold text-richblack-400 ">
+        <div className="flex w-[10%] select-none   flex-col text-center font-inter font-bold text-richBlack-400 ">
           <p>1</p>
           <p>2</p>
           <p>3</p>
