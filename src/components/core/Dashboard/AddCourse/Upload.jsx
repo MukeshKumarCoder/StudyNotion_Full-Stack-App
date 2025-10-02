@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { FiUploadCloud } from "react-icons/fi";
+import "video-react/dist/video-react.css";
+import { Player } from "video-react";
 
 const Upload = ({
   name,
@@ -90,16 +92,27 @@ const Upload = ({
             className="flex w-full flex-col items-center p-6"
             {...getRootProps()}
           >
-            <input {...getInputProps()} ref={inputRef} />
+            <input
+              {...getInputProps()}
+              ref={inputRef}
+              style={{ display: "none" }}
+              onClick={(e) => e.stopPropagation()}
+            />
             <div className="grid aspect-square w-14 place-items-center rounded-full bg-pure-greys-800">
               <FiUploadCloud className="text-2xl text-yellow-50" />
             </div>
             <p className="mt-2 max-w-[200px] text-center text-sm text-richBlack-200">
               Drag and drop an {!video ? "image" : "video"}, or click to{" "}
-              <span className="font-semibold text-yellow-50">Browse</span> a
-              file
+              <button
+                type="button"
+                className="font-semibold text-yellow-50 underline"
+                onClick={() => inputRef.current?.click()}
+              >
+                Browse
+              </button>{" "}
+              a file
             </p>
-            <ul className="mt-10 flex list-disc justify-between space-x-12 text-center  text-xs text-richBlack-200">
+            <ul className="mt-10 flex list-disc justify-between space-x-12 text-center text-xs text-richBlack-200">
               <li>Aspect ratio 16:9</li>
               <li>Recommended size 1024x576</li>
             </ul>

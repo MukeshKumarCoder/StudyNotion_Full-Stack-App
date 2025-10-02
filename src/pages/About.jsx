@@ -25,9 +25,9 @@ const About = () => {
           </header>
           <div className="sm:h-[70px] lg:h-[150px]"></div>
           <div className="absolute bottom-0 left-[50%] grid w-[100%] translate-x-[-50%] translate-y-[30%] grid-cols-3 gap-3 lg:gap-5">
-            <img src={BannerImage1} alt="" />
-            <img src={BannerImage2} alt="" />
-            <img src={BannerImage3} alt="" />
+            <img src={BannerImage1} alt="" loading="lazy" />
+            <img src={BannerImage2} alt="" loading="lazy" />
+            <img src={BannerImage3} alt="" loading="lazy" />
           </div>
         </div>
       </section>
@@ -41,9 +41,9 @@ const About = () => {
         <div className="mx-auto flex w-11/12 max-w-maxContent flex-col justify-between gap-10 text-richBlack-500">
           <div className="flex flex-col items-center gap-10 lg:flex-row justify-between">
             <div className="my-24 flex lg:w-[50%] flex-col gap-10">
-              <h1 className="bg-gradient-to-br from-[#833AB4] via-[#FD1D1D] to-[#FCB045] bg-clip-text text-4xl font-semibold text-transparent lg:w-[70%] ">
+              <h2 className="bg-gradient-to-br from-[#833AB4] via-[#FD1D1D] to-[#FCB045] bg-clip-text text-4xl font-semibold text-transparent lg:w-[70%] ">
                 Our Founding Story
-              </h1>
+              </h2>
               <p className="text-base font-medium text-richBlack-300 lg:w-[95%]">
                 Our e-learning platform was born out of a shared vision and
                 passion for transforming education. It all began with a group of
@@ -65,16 +65,17 @@ const About = () => {
             <div>
               <img
                 src={FoundingStory}
-                alt=""
+                alt="Founding Story Illustration"
+                loading="lazy"
                 className="shadow-[0_0_20px_0] shadow-[#FC6767]"
               />
             </div>
           </div>
           <div className="flex flex-col items-center lg:gap-10 lg:flex-row justify-between">
             <div className="my-24 flex lg:w-[40%] flex-col gap-10">
-              <h1 className="bg-gradient-to-b from-[#FF512F] to-[#F09819] bg-clip-text text-4xl font-semibold text-transparent lg:w-[70%] ">
+              <h2 className="bg-gradient-to-b from-[#FF512F] to-[#F09819] bg-clip-text text-4xl font-semibold text-transparent lg:w-[70%] ">
                 Our Vision
-              </h1>
+              </h2>
               <p className="text-base font-medium text-richBlack-300 lg:w-[95%]">
                 With this vision in mind, we set out on a journey to create an
                 e-learning platform that would revolutionize the way people
@@ -85,9 +86,9 @@ const About = () => {
               </p>
             </div>
             <div className="my-24 flex lg:w-[40%] flex-col gap-10">
-              <h1 className="bg-gradient-to-b from-[#1FA2FF] via-[#12D8FA] to-[#A6FFCB] text-transparent bg-clip-text text-4xl font-semibold lg:w-[70%] ">
+              <h2 className="bg-gradient-to-b from-[#1FA2FF] via-[#12D8FA] to-[#A6FFCB] text-transparent bg-clip-text text-4xl font-semibold lg:w-[70%] ">
                 Our Mission
-              </h1>
+              </h2>
               <p className="text-base font-medium text-richBlack-300 lg:w-[95%]">
                 Our mission goes beyond just delivering courses online. We
                 wanted to create a vibrant community of learners, where

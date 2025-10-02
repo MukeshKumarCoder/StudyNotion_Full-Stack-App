@@ -49,7 +49,7 @@ export const getUserEnrolledCourses = async (token) => {
         Authorization: `Bearer ${token}`,
       }
     );
-    
+
     if (!response.data.success) {
       throw new Error(response.data.message);
     }
@@ -72,7 +72,7 @@ export const getInstructorData = async (token) => {
     // console.log("GET_INSTRUCTOR_API_RESPONSE", response);
     result = response?.data?.courses;
   } catch (error) {
-    // console.log("GET_INSTRUCTOR_API ERROR", error);
+    console.log("GET_INSTRUCTOR_API ERROR", error);
     toast.error("Could not Get Instructor Data");
   }
   toast.dismiss(toastId);

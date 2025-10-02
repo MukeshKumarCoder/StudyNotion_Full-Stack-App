@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   courseSectionData: [],
-  courseEntireData: [],
+  courseEntireData: null,
   completedLectures: [],
   totalNoOfLectures: 0,
 };
@@ -12,7 +12,7 @@ const viewCourseSlice = createSlice({
   initialState,
   reducers: {
     setCourseSectionData: (state, action) => {
-      state.courseEntireData = action.payload;
+      state.courseSectionData = action.payload;
     },
     setEntireCourseData: (state, action) => {
       state.courseEntireData = action.payload;

@@ -30,7 +30,6 @@ const EditProfile = () => {
   });
 
   const submitProfileForm = async (data) => {
-    // console.log("Form Data - ", data)
     try {
       await dispatch(updateProfile(token, navigate, data));
     } catch (error) {
@@ -202,3 +201,9 @@ const EditProfile = () => {
 };
 
 export default EditProfile;
+
+
+
+
+
+

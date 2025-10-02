@@ -27,7 +27,7 @@ const SubSectionModal = ({
   } = useForm();
 
   const dispatch = useDispatch();
-  const { loading, setLoading } = useState(false);
+  const [loading, setLoading] = useState(false);
   const { token } = useSelector((state) => state.auth);
   const { course } = useSelector((state) => state.course);
 

@@ -170,7 +170,7 @@ export const updateSection = async (data, token) => {
       throw new Error("Could Not Update Section");
     }
     toast.success("Course Section Updated");
-    result = response?.data?.data;
+    result = response?.data?.course;
   } catch (error) {
     toast.error(error.message);
   }
@@ -212,7 +212,7 @@ export const deleteSection = async (data, token) => {
       throw new Error("Could Not Delete Section");
     }
     toast.success("Course Section Deleted");
-    result = response?.data?.data;
+    result = response?.data?.updatedCourse;
   } catch (error) {
     toast.error(error.message);
   }
@@ -279,6 +279,7 @@ export const deleteCourse = async (data, token) => {
     }
     toast.success("Course Deleted");
   } catch (error) {
+    console.log("error", error);
     toast.error(error.message);
   }
   toast.dismiss(toastId);
@@ -342,14 +343,17 @@ export const createRating = async (data, token) => {
       Authorization: `Bearer ${token}`,
     });
 
-    if (!response?.data?.success) {
-      throw new Error("Could Not Create Rating");
+    if (response?.data?.success) {
+      toast.success(response.data.message);
+      success = true;
+    } else {
+      toast.error(response?.data?.message || "Could Not Create Rating");
+      success = false;
     }
-    toast.success("Rating Created");
     success = true;
   } catch (error) {
     success = false;
-    toast.error(error.message);
+    toast.error(error.response?.data?.message || error.message);
   }
   toast.dismiss(toastId);
   return success;

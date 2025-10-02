@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { createRating } from "../../../services/operations/courseDetailsAPI";
 import IconBtn from "../../common/IconBtn";
 
-const CourseReviewModal = () => {
+const CourseReviewModal = ({ setReviewModal }) => {
   const { user } = useSelector((state) => state.profile);
   const { token } = useSelector((state) => state.auth);
   const { courseEntireData } = useSelector((state) => state.viewCourse);

@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import IconBtn from "../../../common/IconBtn";
 import { updateDisplayPicture } from "../../../../services/operations/SettingsAPI";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const ChangeProfilePicture = () => {
   const { token } = useSelector((state) => state.auth);
@@ -46,7 +47,8 @@ const ChangeProfilePicture = () => {
         setLoading(false);
       });
     } catch (error) {
-      console.log("ERROR MESSAGE - ", error.message);
+      toast.error(error.message);
+      // console.log("ERROR MESSAGE - ", error.message);
     }
   };
 

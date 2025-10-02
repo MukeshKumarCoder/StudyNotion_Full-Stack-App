@@ -48,6 +48,7 @@ const ForgotPassword = () => {
             )}
             <button
               type="submit"
+              disabled={loading}
               className="mt-6 w-full rounded-[8px] bg-yellow-50 py-[12px] px-[12px] font-medium text-richBlack-900"
             >
               {!emailSent ? "Submit" : "Resend Email"}

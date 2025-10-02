@@ -1,4 +1,3 @@
-import React from "react";
 import { FaArrowRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import HighlightText from "../components/core/HomePage/HighlightText";
@@ -14,12 +13,12 @@ import Footer from "../components/common/Footer";
 
 const Home = () => {
   return (
-    <div>
+    <main>
       {/* section 1 */}
-      <div className=" relative mx-auto flex w-11/12 max-w-maxContent flex-col items-center justify-between gap-8 text-white">
-        <Link to={"/signup"}>
-          <div className="group mx-auto mt-16 w-fit rounded-full bg-richBlack-800 p-1 font-bold text-richBlack-200 drop-shadow-[0_1.5px_rgba(255,255,255,0.25)] transition-all duration-200 hover:scale-95 hover:drop-shadow-none">
-            <div className="flex flex-row items-center gap-2 rounded-full px-10 py-[5px] transition-all duration-200 group-hover:bg-richBlack-900">
+      <section className="relative mx-auto flex w-11/12 max-w-maxContent flex-col items-center justify-between gap-8 text-white">
+        <Link to={"/signup"} aria-label="Become an Instructor">
+          <div className="group mx-auto mt-16 w-fit rounded-full bg-richBlack-800 p-1 font-bold shadow-md text-richBlack-200 transition-all duration-200 hover:scale-95 hover:shadow-none ">
+            <div className="flex items-center gap-2 rounded-full px-10 py-1 transition-colors duration-300 group-hover:bg-richBlack-900">
               <p>Become an Instructor</p>
               <FaArrowRight />
             </div>
@@ -27,11 +26,12 @@ const Home = () => {
         </Link>
 
         {/* Heading */}
-        <div className="text-center text-4xl font-semibold">
+        <h1 className="text-center text-4xl sm:text-3xl font-semibold">
           Empower Your Future with
           <HighlightText text={"Coding Skills"} />
-        </div>
-        {/* subHeading */}
+        </h1>
+
+        {/* Subheading */}
         <p className="-mt-3 w-[90%] text-center text-lg font-bold text-richBlack-300">
           With our online coding courses, you can learn at your own pace, from
           anywhere in the world, and get access to a wealth of resources,
@@ -39,8 +39,7 @@ const Home = () => {
           instructors.
         </p>
 
-        {/* CTAButton */}
-        <div className="mt-8 flex flex-row gap-7">
+        <div className="mt-6 flex gap-7">
           <CTAButton active={true} linkTo={"/signup"}>
             Learn More
           </CTAButton>
@@ -54,6 +53,7 @@ const Home = () => {
             muted
             loop
             autoPlay
+            title="Demo Video"
           >
             <source src={DemoVideo} type="video/mp4" />
           </video>
@@ -64,11 +64,11 @@ const Home = () => {
           <CodeBlocks
             position={"lg:flex-row"}
             heading={
-              <div className="text-4xl font-semibold">
+              <h2 className="text-4xl font-semibold">
                 Unlock your
                 <HighlightText text={"coding potential"} /> with our online
                 courses.
-              </div>
+              </h2>
             }
             subheading={
               "Our courses are designed and taught by industry experts who have years of experience in coding and are passionate about sharing their knowledge with you."
@@ -94,10 +94,10 @@ const Home = () => {
           <CodeBlocks
             position={"lg:flex-row-reverse"}
             heading={
-              <div className="w-[100%] text-4xl font-semibold lg:w-[50%]">
+              <h2 className="w-[100%] text-4xl font-semibold lg:w-[50%]">
                 Start
                 <HighlightText text={"coding in seconds"} />
-              </div>
+              </h2>
             }
             subheading={
               "Go ahead, give it a try. Our hands-on learning environment means you'll be writing real code from your very first lesson."
@@ -119,10 +119,10 @@ const Home = () => {
         </div>
         {/* Explore More */}
         <ExploreMore />
-      </div>
+      </section>
 
       {/* section 2 */}
-      <div className="bg-pure-greys-5 text-richBlack-700">
+      <section className="bg-pure-greys-5 text-richBlack-700">
         <div className="homepage_bg h-[320px]">
           {/* Explore full category section */}
           <div className="mx-auto flex w-11/12 max-w-maxContent flex-col items-center justify-between gap-8">
@@ -166,7 +166,7 @@ const Home = () => {
           {/* Learning Language Section - Section 3 */}
           <LearningLanguageSection />
         </div>
-      </div>
+      </section>
 
       {/* Section 3 */}
       <div className="relative mx-auto my-20 flex w-11/12 max-w-maxContent flex-col items-center justify-between gap-8 bg-richBlack-900 text-white">
@@ -177,12 +177,13 @@ const Home = () => {
         <h2 className="mt-8 text-center text-4xl font-semibold">
           Reviews from other learners
         </h2>
-        {/* Review Slider here */}
-        <ReviewSlider />
+        <div className="w-full">
+          <ReviewSlider />
+        </div>
       </div>
       {/* Footer */}
       <Footer />
-    </div>
+    </main>
   );
 };
 

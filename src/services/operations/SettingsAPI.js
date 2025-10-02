@@ -31,6 +31,7 @@ export const updateDisplayPicture = (token, navigate, formData) => {
       }
       toast.success("Display Picture Updated Successfully");
       dispatch(setUser(response.data.data));
+      localStorage.setItem("user", JSON.stringify(response.data.data));
       navigate("/dashboard/my-profile");
     } catch (error) {
       // console.log("UPDATE_DISPLAY_PICTURE_API API ERROR............", error);
@@ -47,7 +48,7 @@ export const updateProfile = (token, navigate, formData) => {
       const response = await apiConnector("PUT", UPDATE_PROFILE_API, formData, {
         Authorization: `Bearer ${token}`,
       });
-      console.log("UPDATE_PROFILE_API API RESPONSE............", response);
+      // console.log("UPDATE_PROFILE_API API RESPONSE............", response);
 
       if (!response.data.success) {
         throw new Error(response.data.message);
@@ -55,10 +56,13 @@ export const updateProfile = (token, navigate, formData) => {
       const userImage = response.data.updatedUserDetails.image
         ? response.data.updatedUserDetails.image
         : `https://api.dicebear.com/5.x/initials/svg?seed=${response.data.updatedUserDetails.firstName} ${response.data.updatedUserDetails.lastName}`;
-      dispatch(
-        setUser({ ...response.data.updatedUserDetails, image: userImage })
-      );
-      // console.log(userImage);
+      const updatedUser = {
+        ...response.data.updatedUserDetails,
+        image: userImage,
+      };
+
+      dispatch(setUser(updatedUser));
+      localStorage.setItem("user", JSON.stringify(updatedUser));
       toast.success("Profile Updated Successfully");
       navigate("/dashboard/my-profile");
     } catch (error) {
@@ -81,7 +85,7 @@ export const changePassword = async (token, navigate, formData) => {
       throw new Error(response.data.message);
     }
     toast.success("Password Changed Successfully");
-    navigate("/dashboard/my-profile")
+    navigate("/dashboard/my-profile");
   } catch (error) {
     // console.log("CHANGE_PASSWORD_API API ERROR............", error);
     toast.error(error.response.data.message);

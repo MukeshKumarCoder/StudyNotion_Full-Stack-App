@@ -10,7 +10,7 @@ const RequirementField = ({ name, label, register, setValue, errors }) => {
     if (editCourse) {
       setRequirementsList(course?.instructions);
     }
-    register(name, { required: true, validate: () => value.length > 0 });
+    register(name, { required: true, validate: (value) => value.length > 0 });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -53,13 +53,13 @@ const RequirementField = ({ name, label, register, setValue, errors }) => {
         </button>
       </div>
       {requirementsList.length > 0 && (
-        <ul className="mt-2 list-inside list-disc">
+        <ul className="list-inside list-disc flex gap-3">
           {requirementsList.map((requirement, index) => (
-            <li key={index} className="flex items-center text-richBlack-5">
+            <li key={index} className="flex text-richBlack-5">
               <span>{requirement}</span>
               <button
                 type="button"
-                className="ml-2 text-xs text-pure-greys-300 "
+                className="ml-2 text-xs text-yellow-50 mt-2"
                 onClick={() => handleRemoveRequirement(index)}
               >
                 clear

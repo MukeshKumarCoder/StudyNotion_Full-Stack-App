@@ -169,7 +169,7 @@ const VideoDetails = () => {
       ) : (
         <Player
           ref={playerRef}
-          aspectRatio="16:9"
+          fluid={true}
           playsInline
           onEnded={() => setVideoEnded(true)}
           src={videoData?.videoUrl}

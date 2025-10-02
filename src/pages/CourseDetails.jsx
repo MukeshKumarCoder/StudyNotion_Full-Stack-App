@@ -17,20 +17,23 @@ import Error from "./Error";
 import toast from "react-hot-toast";
 
 const CourseDetails = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { user } = useSelector((state) => state.profile);
   const { token } = useSelector((state) => state.auth);
   const { loading } = useSelector((state) => state.profile);
   const { paymentLoading } = useSelector((state) => state.course);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   // Getting courseId from url parameter
   const { courseId } = useParams();
 
   const [response, setResponse] = useState(null);
   const [confirmationModal, setConfirmationModal] = useState(null);
+  const [avgReviewCount, setAvgReviewCount] = useState(Array(0));
+  const [totalNoOfLectures, setTotalNoOfLectures] = useState(0);
+  const [isActive, setIsActive] = useState(Array(0));
 
-  // Calling fetchCourseDetails function to fetch the details
+  // Fetch course details
   useEffect(() => {
     (async () => {
       try {
@@ -43,13 +46,11 @@ const CourseDetails = () => {
   }, [courseId]);
 
   // Calculating Avg Review count
-  const [avgReviewCount, setAvgReviewCount] = useState(Array(0));
   useEffect(() => {
     const count = getAvgRating(response?.data?.courseDetails.ratingAndReviews);
     setAvgReviewCount(count);
   }, [response]);
 
-  const [isActive, setIsActive] = useState(Array(0));
   const handleActive = (id) => {
     setIsActive(
       !isActive.includes(id)
@@ -59,7 +60,6 @@ const CourseDetails = () => {
   };
 
   // Total number of lecture
-  const [totalNoOfLectures, setTotalNoOfLectures] = useState(0);
   useEffect(() => {
     let lectures = 0;
     response?.data?.courseDetails?.courseContent?.forEach((sec) => {
@@ -80,7 +80,6 @@ const CourseDetails = () => {
   }
 
   const {
-    _id: course_id,
     courseName,
     courseDescription,
     thumbnail,
@@ -89,7 +88,7 @@ const CourseDetails = () => {
     courseContent,
     ratingAndReviews,
     instructor,
-    studentsEnrolled,
+    studentEnrolled,
     createdAt,
   } = response.data?.courseDetails;
 
@@ -140,10 +139,17 @@ const CourseDetails = () => {
               </div>
               <p className={`text-richBlack-200`}>{courseDescription}</p>
               <div className="text-md flex flex-wrap items-center gap-2">
-                <span className="text-yellow-25">{avgReviewCount}</span>
-                <RatingStars Review_Count={avgReviewCount} Star_Size={24} />
-                <span>{`(${ratingAndReviews.length} reviews)`}</span>
-                <span>{`${studentsEnrolled.length} students enrolled`}</span>
+                <span className="text-yellow-25">
+                  {isNaN(avgReviewCount) ? 0 : avgReviewCount}
+                </span>
+                <RatingStars
+                  Review_Count={isNaN(avgReviewCount) ? 0 : avgReviewCount}
+                  Star_Size={24}
+                />
+                <span>{`(${ratingAndReviews?.length || 0} reviews)`}</span>
+                <span>{`${
+                  studentEnrolled?.length || 0
+                } students enrolled`}</span>
               </div>
               <div>
                 <p className="">
@@ -198,13 +204,14 @@ const CourseDetails = () => {
               <p className="text-[28px] font-semibold">Course Content</p>
               <div className="flex flex-wrap justify-between gap-2">
                 <div className="flex gap-2">
+                  <span>{courseContent?.length || 0} section(s)</span>
                   <span>
-                    {courseContent.length} {`section(s)`}
+                    {isNaN(totalNoOfLectures) ? 0 : totalNoOfLectures}{" "}
+                    lecture(s)
                   </span>
                   <span>
-                    {totalNoOfLectures} {`lecture(s)`}
+                    {response.data?.totalDuration || "N/A"} total length
                   </span>
-                  <span>{response.data?.totalDuration} total length</span>
                 </div>
                 <div>
                   <button

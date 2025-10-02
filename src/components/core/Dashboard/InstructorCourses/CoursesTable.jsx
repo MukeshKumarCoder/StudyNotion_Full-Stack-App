@@ -6,7 +6,6 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Table, Tbody, Td, Th, Thead, Tr } from "react-super-responsive-table";
-import { setCourse } from "../../../../slices/courseSlice";
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
 import { formatDate } from "../../../../services/formatDate";
 import {
@@ -16,7 +15,7 @@ import {
 import { COURSE_STATUS } from "../../../../utils/constants";
 import ConfirmationModal from "../../../common/ConfirmationModal";
 
-const CoursesTable = () => {
+const CoursesTable = ({ courses, setCourses }) => {
   const navigate = useNavigate();
   const { token } = useSelector((state) => state.auth);
   const [loading, setLoading] = useState(false);
@@ -28,7 +27,7 @@ const CoursesTable = () => {
     await deleteCourse({ courseId: courseId }, token);
     const result = await fetchInstructorCourses(token);
     if (result) {
-      setCourse(result);
+      setCourses(result);
     }
     setConfirmationModal(null);
     setLoading(false);
@@ -104,7 +103,7 @@ const CoursesTable = () => {
                   </div>
                 </Td>
                 <Td className="text-sm font-medium text-richBlack-100">
-                  2hr 30min
+                  {course.totalDuration || "N/A"}
                 </Td>
                 <Td className="text-sm font-medium text-richBlack-100">
                   ₹{course.price}

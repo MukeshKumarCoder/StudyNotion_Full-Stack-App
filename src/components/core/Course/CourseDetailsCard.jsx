@@ -17,11 +17,7 @@ const CourseDetailsCard = ({
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const {
-    thumbnail: ThumbnailImage,
-    price: CurrentPrice,
-    _id: courseId,
-  } = course;
+  const { thumbnail: ThumbnailImage, price: CurrentPrice } = course;
 
   const handleShare = () => {
     copy(window.location.href);
@@ -57,22 +53,22 @@ const CourseDetailsCard = ({
       />
       <div className="px-4">
         <p className="space-x-3 pb-4 text-3xl font-semibold">
-          Rs. {CurrentPrice}
+          Rs. {course?.price ?? "N/A"}
         </p>
         <div className="flex flex-col gap-4">
           <button
             className="yellowButton"
             onClick={
-              user && course?.studentsEnrolled.includes(user?._id)
+              user && course?.studentEnrolled.includes(user?._id)
                 ? () => navigate("/dashboard/enrolled-courses")
                 : handleBuyCourse
             }
           >
-            {user && course?.studentsEnrolled.includes(user?._id)
+            {user && course?.studentEnrolled.includes(user?._id)
               ? "Go To Course"
               : "Buy Now"}
           </button>
-          {(!user || !course?.studentsEnrolled.includes(user?._id)) && (
+          {(!user || !course?.studentEnrolled.includes(user?._id)) && (
             <button onClick={handleAddToCart} className="blackButton">
               Add to Cart
             </button>
@@ -90,7 +86,7 @@ const CourseDetailsCard = ({
               return (
                 <p className={`flex gap-2`} key={i}>
                   <BsFillCaretRightFill />
-                  <span>{item}</span>
+                  <span>{String(item)}</span>
                 </p>
               );
             })}

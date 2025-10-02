@@ -108,7 +108,7 @@ const Instructor = () => {
                     </p>
                     <div className="mt-1 flex items-center space-x-2">
                       <p className="text-xs font-medium text-richBlack-300">
-                        {course.studentsEnrolled.length} students
+                        {course.studentEnrolled.length} students
                       </p>
                       <p className="text-xs font-medium text-richBlack-300">
                         |

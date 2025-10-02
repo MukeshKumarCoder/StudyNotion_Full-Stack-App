@@ -25,6 +25,8 @@ import ViewCourse from "./pages/ViewCourse";
 import VideoDetails from "./components/core/ViewCourse/VideoDetails";
 import Instructor from "./components/core/Dashboard/InstructorDashboard/Instructor";
 import { useSelector } from "react-redux";
+import CreateCategory from "./components/core/Dashboard/CreateCategory";
+import PurchaseHistory from "./components/core/Dashboard/PurchaseHistory";
 
 const App = () => {
   const { user } = useSelector((state) => state.profile);
@@ -33,7 +35,7 @@ const App = () => {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="catalog/:catalogName" element={<Catalog />} />
+        <Route path="/catalog/:categorySlugWithId" element={<Catalog />} />
         <Route path="courses/:courseId" element={<CourseDetails />} />
         <Route path="signup" element={<Signup />} />
         <Route path="login" element={<Login />} />
@@ -53,12 +55,20 @@ const App = () => {
           <Route path="dashboard/my-profile" element={<MyProfile />} />
           <Route path="dashboard/Settings" element={<Settings />} />
 
+          {user?.accountType === ACCOUNT_TYPE.ADMIN && (
+            <Route path="dashboard/add-category" element={<CreateCategory />} />
+          )}
+
           {user?.accountType === ACCOUNT_TYPE.STUDENT && (
             <>
               <Route path="dashboard/cart" element={<Cart />} />
               <Route
                 path="dashboard/enrolled-courses"
                 element={<EnrolledCourses />}
+              />
+              <Route
+                path="dashboard/purchase-history"
+                element={<PurchaseHistory />}
               />
             </>
           )}

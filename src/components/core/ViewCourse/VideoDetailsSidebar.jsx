@@ -63,7 +63,7 @@ const VideoDetailsSidebar = ({ setReviewModal }) => {
         </div>
       </div>
       <div className="h-[calc(100vh - 5rem)] overflow-y-auto">
-        {courseEntireData.map((course, i) => (
+        {courseSectionData.map((course, i) => (
           <div
             className="mt-2 cursor-pointer text-sm text-richBlack-5"
             onClick={() => setActiveStatus(course?._id)}

@@ -2,7 +2,7 @@ const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 // AUTH ENDPOINTS
 export const endpoints = {
-  SENDOTP_API: BASE_URL + "/auth/sendotp",
+  SENDOTP_API: BASE_URL + "/auth/send-otp",
   SIGNUP_API: BASE_URL + "/auth/signup",
   LOGIN_API: BASE_URL + "/auth/login",
   RESETPASSTOKEN_API: BASE_URL + "/auth/reset-password-token",
@@ -12,15 +12,20 @@ export const endpoints = {
 // PROFILE ENDPOINTS
 export const profileEndpoints = {
   GET_USER_DETAILS_API: BASE_URL + "/profile/getUserDetails",
-  GET_USER_ENROLLED_COURSES_API: BASE_URL + "/profile/getEnrolledCourses",
+  GET_USER_ENROLLED_COURSES_API: BASE_URL + "/profile/get-enrolled-courses",
   GET_INSTRUCTOR_DATA_API: BASE_URL + "/profile/instructorDashboard",
 };
 
 // STUDENTS ENDPOINTS
 export const studentEndpoints = {
-  COURSE_PAYMENT_API: BASE_URL + "/payment/capturePayment",
-  COURSE_VERIFY_API: BASE_URL + "/payment/verifyPayment",
-  SEND_PAYMENT_SUCCESS_EMAIL_API: BASE_URL + "/payment/sendPaymentSuccessEmail",
+  COURSE_PAYMENT_API: BASE_URL + "/payment//create-order",
+  COURSE_VERIFY_API: BASE_URL + "/payment/verify-payment",
+  PURCHaSE_HISTORY_API: BASE_URL + "/purchase/history",
+};
+
+// Category ENDPOINTS
+export const categoryEndPoints = {
+  CREATE_CATEGORY_API: BASE_URL + "/course/createCategory",
 };
 
 // COURSE ENDPOINTS
@@ -60,13 +65,13 @@ export const catalogData = {
 };
 // CONTACT-US API
 export const contactUsEndpoint = {
-  CONTACT_US_API: BASE_URL + "/reach/contact",
+  CONTACT_US_API: BASE_URL + "/contact",
 };
 
 // SETTINGS PAGE API
 export const settingsEndpoints = {
-  UPDATE_DISPLAY_PICTURE_API: BASE_URL + "/profile/updateDisplayPicture",
-  UPDATE_PROFILE_API: BASE_URL + "/profile/updateProfile",
-  CHANGE_PASSWORD_API: BASE_URL + "/auth/changepassword",
-  DELETE_PROFILE_API: BASE_URL + "/profile/deleteProfile",
+  UPDATE_DISPLAY_PICTURE_API: BASE_URL + "/profile/update-display-picture",
+  UPDATE_PROFILE_API: BASE_URL + "/profile/update-profile",
+  CHANGE_PASSWORD_API: BASE_URL + "/auth/change-password",
+  DELETE_PROFILE_API: BASE_URL + "/profile/delete-profile",
 };
