@@ -4,8 +4,14 @@ import { useNavigate, useParams } from "react-router-dom";
 import "video-react/dist/video-react.css";
 import { useLocation } from "react-router-dom";
 import { BigPlayButton, Player } from "video-react";
-import { markLectureAsComplete } from "../../../services/operations/courseDetailsAPI";
-import { updateCompletedLectures } from "../../../slices/viewCourseSlice";
+import {
+  markLectureAsComplete,
+  updateLastViewedLecture,
+} from "../../../services/operations/courseDetailsAPI";
+import {
+  setLastViewedLecture,
+  updateCompletedLectures,
+} from "../../../slices/viewCourseSlice";
 import IconBtn from "../../common/IconBtn";
 
 const VideoDetails = () => {
@@ -15,13 +21,20 @@ const VideoDetails = () => {
   const playerRef = useRef(null);
   const dispatch = useDispatch();
   const { token } = useSelector((state) => state.auth);
-  const { courseSectionData, courseEntireData, completedLectures } =
-    useSelector((state) => state.viewCourse);
+  const {
+    courseSectionData,
+    courseEntireData,
+    completedLectures,
+    lastAccessedSubSection,
+    lastPlaybackTime,
+  } = useSelector((state) => state.viewCourse);
 
   const [videoData, setVideoData] = useState([]);
   const [previewSource, setPreviewSource] = useState("");
   const [videoEnded, setVideoEnded] = useState(false);
   const [loading, setLoading] = useState(false);
+  const lastSyncedTimeRef = useRef(0);
+  const hasAppliedResumeRef = useRef(false);
 
   useEffect(() => {
     (async () => {
@@ -42,6 +55,79 @@ const VideoDetails = () => {
       }
     })();
   }, [courseSectionData, courseEntireData, location.pathname]);
+
+  const getCurrentVideoTime = () => {
+    const playerState = playerRef?.current?.getState?.();
+    return playerState?.player?.currentTime || 0;
+  };
+
+  const syncLastViewedLecture = async (forceSync = false, overrideTime = null) => {
+    if (!token || !courseId || !sectionId || !subSectionId) return;
+
+    const currentTime =
+      overrideTime !== null && overrideTime !== undefined
+        ? overrideTime
+        : getCurrentVideoTime();
+
+    if (
+      !forceSync &&
+      Math.abs((currentTime || 0) - (lastSyncedTimeRef.current || 0)) < 10
+    ) {
+      return;
+    }
+
+    const payload = {
+      courseId,
+      sectionId,
+      subSectionId,
+      currentTime: Math.max(0, Math.floor(currentTime || 0)),
+    };
+    const response = await updateLastViewedLecture(payload, token);
+    if (response) {
+      lastSyncedTimeRef.current = payload.currentTime;
+      dispatch(setLastViewedLecture(response));
+    }
+  };
+
+  useEffect(() => {
+    lastSyncedTimeRef.current = 0;
+    hasAppliedResumeRef.current = false;
+  }, [sectionId, subSectionId]);
+
+  useEffect(() => {
+    if (
+      !videoData ||
+      !lastAccessedSubSection ||
+      subSectionId !== lastAccessedSubSection ||
+      Number(lastPlaybackTime || 0) < 5 ||
+      hasAppliedResumeRef.current
+    ) {
+      return;
+    }
+
+    const timer = setTimeout(() => {
+      if (playerRef?.current?.seek) {
+        playerRef.current.seek(lastPlaybackTime);
+        hasAppliedResumeRef.current = true;
+      }
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [videoData, lastAccessedSubSection, lastPlaybackTime, subSectionId]);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      syncLastViewedLecture(false);
+    }, 15000);
+
+    return () => clearInterval(intervalId);
+  }, [courseId, sectionId, subSectionId, token]);
+
+  useEffect(() => {
+    return () => {
+      syncLastViewedLecture(true);
+    };
+  }, [courseId, sectionId, subSectionId, token]);
 
   // check if the lecture is the first video of the course
   const isFirstVideo = () => {
@@ -171,7 +257,11 @@ const VideoDetails = () => {
           ref={playerRef}
           fluid={true}
           playsInline
-          onEnded={() => setVideoEnded(true)}
+          onPause={() => syncLastViewedLecture(false)}
+          onEnded={() => {
+            setVideoEnded(true);
+            syncLastViewedLecture(true);
+          }}
           src={videoData?.videoUrl}
         >
           <BigPlayButton position="center" />

@@ -121,15 +121,16 @@ export const getAllPurchaseHistory = async (token) => {
   const toastId = toast.loading("Loading...");
   let result = [];
   try {
-    const response = await apiConnector("GET", PURCHaSE_HISTORY_API,null, {
+    const response = await apiConnector("GET", PURCHaSE_HISTORY_API, null, {
       Authorization: `Bearer ${token}`,
     });
     if (!response?.data?.success) {
-      throw new Error("Could Not Fetch Course");
+      throw new Error(response?.data?.message || "Could not fetch purchase history");
     }
-    result = response?.data?.data;
+    result = response?.data?.data ?? [];
   } catch (error) {
     toast.error(error.message);
   }
   toast.dismiss(toastId);
+  return result;
 };

@@ -4,6 +4,7 @@ const User = require("../models/User");
 const mailSender = require("../utils/mailSender");
 const crypto = require("crypto");
 const CourseProgress = require("../models/CourseProgress");
+const Purchase = require("../models/Purchase");
 const {
   courseEnrollmentEmail,
 } = require("../mail/templates/courseEnrollmentEmail");
@@ -113,6 +114,11 @@ exports.verifySignature = async (req, res) => {
 
     // ✅ Payment verified → Enroll user in course
     for (const courseId of courses) {
+      const course = await Course.findById(courseId);
+      if (!course) {
+        continue;
+      }
+
       await Course.findByIdAndUpdate(
         courseId,
         { $push: { studentEnrolled: userId } },
@@ -125,7 +131,6 @@ exports.verifySignature = async (req, res) => {
         { new: true }
       );
 
-      // 3. ✅ Create CourseProgress entry
       const existingProgress = await CourseProgress.findOne({
         courseId,
         userId,
@@ -139,28 +144,29 @@ exports.verifySignature = async (req, res) => {
         });
       }
 
-      // ✅ Save Purchase History
-      // await PurchaseHistory.create({
-      //   user: userId,
-      //   course: courseId,
-      //   paymentId: razorpay_payment_id,
-      //   orderId: razorpay_order_id,
-      //   amount: course.price,
-      //   status: "SUCCESS",
-      // });
+      await Purchase.create({
+        user: userId,
+        course: courseId,
+        paymentId: razorpay_payment_id,
+        amount: course.price,
+        status: "success",
+      });
 
-      // ✅ Send Enrollment Email
       await mailSender(
         user.email,
         "Course Enrollment Confirmation",
-        courseEnrollmentEmail(user.firstName, Course.courseName)
+        courseEnrollmentEmail(user.firstName, course.courseName)
       );
 
-      // ✅ Send Payment Success Email
       await mailSender(
         user.email,
         "Payment Successful",
-        paymentSuccessEmail(user.firstName, Course.courseName, Course.price)
+        paymentSuccessEmail(
+          user.firstName,
+          course.price,
+          razorpay_order_id,
+          razorpay_payment_id
+        )
       );
     }
 

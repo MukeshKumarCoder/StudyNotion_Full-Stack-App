@@ -8,6 +8,18 @@ body {
     overflow-x: hidden;
 }
 
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
 /* ===== Scrollbar CSS ===== */
 /* Firefox */
 * {
@@ -17,7 +29,7 @@ body {
 
 /* Chrome, Edge, and Safari */
 *::-webkit-scrollbar {
-    width: 0.25rem;
+    width: 0.5rem;
 }
 
 *::-webkit-scrollbar-track {

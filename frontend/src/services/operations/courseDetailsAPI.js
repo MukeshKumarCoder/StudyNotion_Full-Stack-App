@@ -20,12 +20,13 @@ const {
   GET_FULL_COURSE_DETAILS_AUTHENTICATED,
   CREATE_RATING_API,
   LECTURE_COMPLETION_API,
+  UPDATE_LAST_VIEWED_LECTURE_API,
 } = courseEndpoints;
 
 // get all courses
 export const getAllCourses = async () => {
   const toastId = toast.loading("Loading...");
-  const result = [];
+  let result = [];
   try {
     const response = await apiConnector("GET", GET_ALL_COURSE_API);
     if (!response?.data?.success) {
@@ -331,6 +332,30 @@ export const markLectureAsComplete = async (data, token) => {
     toast.error(error.message);
   }
   toast.dismiss(toastId);
+  return result;
+};
+
+export const updateLastViewedLecture = async (data, token) => {
+  let result = null;
+  try {
+    const response = await apiConnector(
+      "POST",
+      UPDATE_LAST_VIEWED_LECTURE_API,
+      data,
+      {
+        Authorization: `Bearer ${token}`,
+      }
+    );
+
+    if (!response?.data?.success) {
+      throw new Error(response?.data?.message || "Could not update progress");
+    }
+
+    result = response?.data?.data ?? null;
+  } catch (error) {
+    // Intentionally quiet: this endpoint is called frequently during playback.
+    result = null;
+  }
   return result;
 };
 

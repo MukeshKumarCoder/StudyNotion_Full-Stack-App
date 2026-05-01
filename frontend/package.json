@@ -7,10 +7,10 @@
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "server": "cd server && npm run dev",
     "dev": "vite"
   },
   "dependencies": {
+    "@clerk/clerk-react": "^5.61.5",
     "@ramonak/react-progress-bar": "^5.0.3",
     "@reduxjs/toolkit": "^1.9.5",
     "axios": "^1.10.0",
@@ -29,7 +29,6 @@
     "react-rating-stars-component": "^2.2.0",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.11.2",
-    "react-scripts": "5.0.1",
     "react-super-responsive-table": "^5.2.3",
     "react-type-animation": "^3.0.1",
     "redux-toolkit": "^1.1.2",

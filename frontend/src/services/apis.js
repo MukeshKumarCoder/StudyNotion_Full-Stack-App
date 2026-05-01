@@ -5,6 +5,7 @@ export const endpoints = {
   SENDOTP_API: BASE_URL + "/auth/send-otp",
   SIGNUP_API: BASE_URL + "/auth/signup",
   LOGIN_API: BASE_URL + "/auth/login",
+  CLERK_SYNC_API: BASE_URL + "/auth/clerk-sync",
   RESETPASSTOKEN_API: BASE_URL + "/auth/reset-password-token",
   RESETPASSWORD_API: BASE_URL + "/auth/reset-password",
 };
@@ -18,7 +19,7 @@ export const profileEndpoints = {
 
 // STUDENTS ENDPOINTS
 export const studentEndpoints = {
-  COURSE_PAYMENT_API: BASE_URL + "/payment//create-order",
+  COURSE_PAYMENT_API: BASE_URL + "/payment/create-order",
   COURSE_VERIFY_API: BASE_URL + "/payment/verify-payment",
   PURCHaSE_HISTORY_API: BASE_URL + "/purchase/history",
 };
@@ -46,6 +47,7 @@ export const courseEndpoints = {
   GET_FULL_COURSE_DETAILS_AUTHENTICATED:
     BASE_URL + "/course/getFullCourseDetails",
   LECTURE_COMPLETION_API: BASE_URL + "/course/updateCourseProgress",
+  UPDATE_LAST_VIEWED_LECTURE_API: BASE_URL + "/course/updateLastViewedLecture",
   CREATE_RATING_API: BASE_URL + "/course/createRating",
 };
 

@@ -9,18 +9,22 @@ const PurchaseHistory = () => {
   const { token } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    const getPurchaseHistory = async () => {
+    if (!token) {
+      setLoading(false);
+      return;
+    }
+    const loadHistory = async () => {
       try {
-        const response = await getAllPurchaseHistory(token);
-        setPurchases(response || []);
+        const data = await getAllPurchaseHistory(token);
+        setPurchases(Array.isArray(data) ? data : []);
       } catch (error) {
         console.log("error", error);
       } finally {
         setLoading(false);
       }
     };
-    getPurchaseHistory();
-  }, []);
+    loadHistory();
+  }, [token]);
 
   if (loading) {
     return (
@@ -40,14 +44,19 @@ const PurchaseHistory = () => {
     <div className="text-white p-4">
       <h2 className="text-2xl font-bold mb-4">Purchase History</h2>
       <div className="space-y-4">
-        {purchases.map((purchase, index) => (
+        {purchases.map((purchase) => (
           <div
-            key={index}
+            key={purchase._id}
             className="p-4 rounded-lg bg-gray-800 shadow-md border border-gray-700"
           >
-            <h3 className="text-lg font-semibold">{purchase.courseName}</h3>
+            <h3 className="text-lg font-semibold">
+              {purchase.course?.courseName ?? "Course"}
+            </h3>
             <p className="text-sm text-gray-400">
-              Purchased on: {new Date(purchase.createdAt).toLocaleDateString()}
+              Purchased on:{" "}
+              {new Date(
+                purchase.purchasedAt || purchase.createdAt
+              ).toLocaleDateString()}
             </p>
             <p className="text-sm text-green-400 font-medium">
               Amount: ₹{purchase.amount}

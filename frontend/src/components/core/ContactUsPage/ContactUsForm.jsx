@@ -101,22 +101,22 @@ const ContactUsForm = () => {
         <label htmlFor="phoneNumber" className="label-style">
           Phone Number
         </label>
-        <div className="flex gap-5">
-          <div className="flex w-[81px] flex-col gap-2">
+        <div className="flex min-w-0 flex-col gap-3 sm:flex-row sm:items-stretch sm:gap-4">
+          <div className="flex w-full min-w-0 flex-col gap-2 px-2 sm:w-32 sm:max-w-[8.5rem] sm:shrink-0">
             <select
-              className="form-style"
+              className="form-style min-w-0"
               {...register("countryCode", { required: true })}
             >
               {CountryCode.map((ele, i) => {
                 return (
                   <option key={i} value={ele.code}>
-                    {ele.code} -{ele.country}
+                    {ele.code} -{ele.country.slice(0, 3)}
                   </option>
                 );
               })}
             </select>
           </div>
-          <div className="flex w-[calc(100%-90px)] flex-col gap-2">
+          <div className="flex min-w-0 flex-1 flex-col gap-2">
             <input
               type="number"
               name="phoneNumber"

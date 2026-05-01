@@ -333,6 +333,11 @@ exports.getFullCourseDetails = async (req, res) => {
         completedVideos: courseProgressCount?.completedVideos
           ? courseProgressCount?.completedVideos
           : [],
+        lastAccessedSection: courseProgressCount?.lastAccessedSection || null,
+        lastAccessedSubSection:
+          courseProgressCount?.lastAccessedSubSection || null,
+        lastPlaybackTime: courseProgressCount?.lastPlaybackTime || 0,
+        lastVisitedAt: courseProgressCount?.lastVisitedAt || null,
       },
     });
   } catch (error) {

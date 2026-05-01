@@ -5,7 +5,7 @@ exports.getPurchaseHistory = async (req, res) => {
     const userId = req.user.id;
 
     const purchases = await Purchase.find({ user: userId })
-      .populate("course", "title description price thumbnail")
+      .populate("course", "courseName courseDescription price thumbnail")
       .sort({ purchasedAt: -1 });
 
     res.status(200).json({

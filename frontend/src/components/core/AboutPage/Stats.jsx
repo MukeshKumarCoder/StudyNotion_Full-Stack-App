@@ -1,5 +1,3 @@
-import React from "react";
-
 const Stats = [
   { count: "5K", label: "Active Students" },
   { count: "10+", label: "Mentors" },
@@ -9,19 +7,18 @@ const Stats = [
 
 const StatsComponent = () => {
   return (
-    <div className="bg-richBlack-700">
-      {/* Stats */}
-      <div className="flex flex-col gap-10 justify-between w-11/12 max-w-maxContent text-white mx-auto ">
-        <div className="grid grid-cols-2 md:grid-cols-4 text-center">
+    <div className="w-full min-w-0 bg-richBlack-700">
+      <div className="mx-auto flex w-11/12 min-w-0 max-w-maxContent flex-col justify-between gap-6 px-1 py-4 text-white sm:gap-10 ">
+        <div className="grid grid-cols-2 gap-y-2 text-center md:grid-cols-4 md:gap-y-0">
           {Stats.map((data, index) => {
             return (
-              <div className="flex flex-col py-10" key={index}>
-                <h1 className="text-[30px] font-bold text-richBlack-5">
+              <div className="flex flex-col py-6 sm:py-8 md:py-10" key={index}>
+                <p className="text-2xl font-bold text-richBlack-5 sm:text-3xl md:text-[30px]">
                   {data.count}
-                </h1>
-                <h2 className="font-semibold text-[16px] text-richBlack-500">
+                </p>
+                <p className="px-1 text-sm font-semibold text-richBlack-500 sm:text-[16px]">
                   {data.label}
-                </h2>
+                </p>
               </div>
             );
           })}

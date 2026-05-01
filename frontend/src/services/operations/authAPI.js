@@ -2,6 +2,7 @@ import { toast } from "react-hot-toast";
 import { setLoading, setToken } from "../../slices/authSlice";
 import { resetCart } from "../../slices/cartSlice";
 import { setUser } from "../../slices/profileSlice";
+import { clerkSignOutRef } from "../../utils/clerkSignOutRef";
 import { apiConnector } from "../apiConnector";
 import { endpoints } from "../apis";
 
@@ -117,7 +118,14 @@ export const login = (email, password, navigate) => {
 };
 
 export const logout = (navigate) => {
-  return (dispatch) => {
+  return async (dispatch) => {
+    try {
+      if (typeof clerkSignOutRef.current === "function") {
+        await clerkSignOutRef.current();
+      }
+    } catch (e) {
+      console.error(e);
+    }
     dispatch(setToken(null));
     dispatch(setUser(null));
     dispatch(resetCart());

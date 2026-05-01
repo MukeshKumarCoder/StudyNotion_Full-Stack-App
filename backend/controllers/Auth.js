@@ -1,8 +1,10 @@
+const crypto = require("crypto");
 const User = require("../models/User");
 const OTP = require("../models/OTP");
 const otpGenerator = require("otp-generator");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const { verifyToken, createClerkClient } = require("@clerk/backend");
 const mailSender = require("../utils/mailSender");
 const { passwordUpdated } = require("../mail/templates/passwordUpdate");
 const { sendOTP } = require("../mail/templates/emailVerificationTemplate");
@@ -138,7 +140,7 @@ exports.login = async (req, res) => {
         process.env.JWT_SECRET,
         {
           expiresIn: "24h",
-        }
+        },
       );
 
       // Save token to user document in database
@@ -238,7 +240,7 @@ exports.changePassword = async (req, res) => {
     // Validate old password
     const isPasswordMatch = await bcrypt.compare(
       oldPassword,
-      userDetails.password
+      userDetails.password,
     );
     if (!isPasswordMatch) {
       return res
@@ -251,7 +253,7 @@ exports.changePassword = async (req, res) => {
     const updatedUserDetails = await User.findByIdAndUpdate(
       req.user.id,
       { password: encryptedPassword },
-      { new: true }
+      { new: true },
     );
 
     //send notification email
@@ -260,8 +262,8 @@ exports.changePassword = async (req, res) => {
         updatedUserDetails.email,
         passwordUpdated(
           updatedUserDetails.email,
-          `password updated successfully for${updatedUserDetails.firstName} ${updatedUserDetails.lastName} `
-        )
+          `password updated successfully for${updatedUserDetails.firstName} ${updatedUserDetails.lastName} `,
+        ),
       );
     } catch (error) {
       return res.status(500).json({
@@ -283,6 +285,122 @@ exports.changePassword = async (req, res) => {
       success: false,
       message: "Error occurred while updating password",
       error: error.message,
+    });
+  }
+};
+
+// Sync Clerk (e.g. Google OAuth) user with MongoDB and return app JWT
+exports.clerkSync = async (req, res) => {
+  try {
+    const secretKey = process.env.CLERK_SECRET_KEY;
+    if (!secretKey) {
+      return res.status(500).json({
+        success: false,
+        message: "Server is missing Clerk configuration",
+      });
+    }
+
+    const authHeader = req.header("Authorization") || "";
+    const sessionToken = authHeader.replace("Bearer ", "").trim();
+    if (!sessionToken) {
+      return res.status(401).json({
+        success: false,
+        message: "Clerk session token is required",
+      });
+    }
+
+    const payload = await verifyToken(sessionToken, { secretKey });
+    const clerkUserId = payload.sub;
+
+    const clerk = createClerkClient({ secretKey });
+    const clerkUser = await clerk.users.getUser(clerkUserId);
+
+    const email =
+      clerkUser.primaryEmailAddress?.emailAddress ||
+      clerkUser.emailAddresses?.[0]?.emailAddress;
+
+    if (!email) {
+      return res.status(400).json({
+        success: false,
+        message: "Clerk user has no email address",
+      });
+    }
+
+    const firstName = clerkUser.firstName || "User";
+    const lastName = clerkUser.lastName || "";
+    const image =
+      clerkUser.imageUrl ||
+      `https://api.dicebear.com/5.x/initials/svg?seed=${firstName} ${lastName}`;
+
+    let user =
+      (await User.findOne({ clerkId: clerkUserId })) ||
+      (await User.findOne({ email }));
+
+    if (user) {
+      user.clerkId = clerkUserId;
+      user.image = image;
+      if (!user.firstName && firstName) user.firstName = firstName;
+      if (!user.lastName && lastName) user.lastName = lastName;
+      await user.save();
+    } else {
+      const oauthPassword = await bcrypt.hash(
+        crypto.randomBytes(32).toString("hex"),
+        10
+      );
+      const profileDetails = await profile.create({
+        gender: null,
+        dateOfBirth: null,
+        about: null,
+        contactNumber: null,
+      });
+
+      user = await User.create({
+        firstName,
+        lastName,
+        email,
+        password: oauthPassword,
+        accountType: "Student",
+        approved: true,
+        additionalDetails: profileDetails._id,
+        image,
+        clerkId: clerkUserId,
+      });
+    }
+
+    const populated = await User.findById(user._id).populate("additionalDetails");
+
+    const token = jwt.sign(
+      {
+        email: populated.email,
+        id: populated._id,
+        accountType: populated.accountType,
+      },
+      process.env.JWT_SECRET,
+      { expiresIn: "24h" }
+    );
+
+    populated.token = token;
+    populated.password = undefined;
+
+    const options = {
+      expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
+      httpOnly: true,
+    };
+
+    return res
+      .cookie("token", token, options)
+      .status(200)
+      .json({
+        success: true,
+        token,
+        user: populated,
+        message: "Signed in with Google successfully",
+      });
+  } catch (error) {
+    console.error("clerkSync error:", error);
+    return res.status(401).json({
+      success: false,
+      message: "Invalid Clerk session or sync failed",
     });
   }
 };
