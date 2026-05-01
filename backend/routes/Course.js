@@ -39,7 +39,10 @@ const {
   getAllRating,
 } = require("../controllers/RatingAndReview");
 
-const { updateCourseProgress } = require("../controllers/courseProgress");
+const {
+  updateCourseProgress,
+  updateLastViewedLecture,
+} = require("../controllers/courseProgress");
 
 // Importing Middlewares
 const {
@@ -68,6 +71,12 @@ router.get("/getInstructorCourses", auth, isInstructor, getInstructorCourses);
 router.delete("/deleteCourse", auth, isInstructor, deleteCourse);
 
 router.post("/updateCourseProgress", auth, isStudent, updateCourseProgress);
+router.post(
+  "/updateLastViewedLecture",
+  auth,
+  isStudent,
+  updateLastViewedLecture
+);
 
 // Section Routes
 

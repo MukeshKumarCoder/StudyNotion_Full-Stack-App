@@ -49,7 +49,7 @@ const CourseDetailsCard = ({
       <img
         src={ThumbnailImage}
         alt={course?.courseName}
-        className="max-h-[300px] min-h-[180px] w-[400px] overflow-hidden rounded-2xl object-cover md:max-w-full"
+       className="h-auto max-h-[300px] min-h-[180px] w-full rounded-2xl object-cover"
       />
       <div className="px-4">
         <p className="space-x-3 pb-4 text-3xl font-semibold">

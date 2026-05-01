@@ -27,11 +27,15 @@ import Instructor from "./components/core/Dashboard/InstructorDashboard/Instruct
 import { useSelector } from "react-redux";
 import CreateCategory from "./components/core/Dashboard/CreateCategory";
 import PurchaseHistory from "./components/core/Dashboard/PurchaseHistory";
+import ClerkSessionSync from "./components/ClerkSessionSync";
+
+const clerkEnabled = Boolean(import.meta.env.VITE_CLERK_PUBLISHABLE_KEY);
 
 const App = () => {
   const { user } = useSelector((state) => state.profile);
   return (
-    <div className="w-screen min-h-screen bg-richBlack-900 flex flex-col font-inter">
+    <div className="flex min-h-screen w-full min-w-0 max-w-[100vw] flex-col font-inter overflow-x-clip bg-richBlack-900">
+      {clerkEnabled ? <ClerkSessionSync /> : null}
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />

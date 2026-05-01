@@ -228,6 +228,11 @@ exports.getEnrolledCourses = async (req, res) => {
 
       user.courses[i].totalDuration = totalDuration;
       user.courses[i].progressPercentage = progressPercentage;
+      user.courses[i].lastAccessedSection =
+        courseProgress?.lastAccessedSection || null;
+      user.courses[i].lastAccessedSubSection =
+        courseProgress?.lastAccessedSubSection || null;
+      user.courses[i].lastVisitedAt = courseProgress?.lastVisitedAt || null;
     }
 
     return res.status(200).json({

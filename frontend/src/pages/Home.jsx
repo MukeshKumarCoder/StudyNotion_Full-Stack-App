@@ -13,10 +13,10 @@ import Footer from "../components/common/Footer";
 
 const Home = () => {
   return (
-    <main>
+    <main className="w-full min-w-0 max-w-full overflow-x-clip">
       {/* section 1 */}
-      <section className="relative mx-auto flex w-11/12 max-w-maxContent flex-col items-center justify-between gap-8 text-white">
-        <Link to={"/signup"} aria-label="Become an Instructor">
+      <section className="relative mx-auto flex w-11/12 max-w-maxContent min-w-0 flex-col items-center justify-between gap-6 px-1 sm:gap-8 text-white">
+        <Link to={"/contact"} aria-label="Become an Instructor">
           <div className="group mx-auto mt-16 w-fit rounded-full bg-richBlack-800 p-1 font-bold shadow-md text-richBlack-200 transition-all duration-200 hover:scale-95 hover:shadow-none ">
             <div className="flex items-center gap-2 rounded-full px-10 py-1 transition-colors duration-300 group-hover:bg-richBlack-900">
               <p>Become an Instructor</p>
@@ -26,34 +26,35 @@ const Home = () => {
         </Link>
 
         {/* Heading */}
-        <h1 className="text-center text-4xl sm:text-3xl font-semibold">
+        <h1 className="px-1 text-center text-3xl font-semibold sm:text-4xl lg:text-5xl">
           Empower Your Future with
           <HighlightText text={"Coding Skills"} />
         </h1>
 
         {/* Subheading */}
-        <p className="-mt-3 w-[90%] text-center text-lg font-bold text-richBlack-300">
+        <p className="-mt-1 w-full max-w-2xl text-center text-base font-bold text-richBlack-300 sm:-mt-3 sm:text-lg">
           With our online coding courses, you can learn at your own pace, from
           anywhere in the world, and get access to a wealth of resources,
           including hands-on projects, quizzes, and personalized feedback from
           instructors.
         </p>
 
-        <div className="mt-6 flex gap-7">
+        <div className="mt-4 flex w-full max-w-md flex-col items-stretch gap-4 min-[400px]:flex-row min-[400px]:justify-center min-[400px]:gap-6 sm:mt-6 sm:max-w-none sm:gap-7">
           <CTAButton active={true} linkTo={"/signup"}>
             Learn More
           </CTAButton>
-          <CTAButton linkTo={"/signup"}>Book a Demo</CTAButton>
+          <CTAButton linkTo={"/contact"}>Book a Demo</CTAButton>
         </div>
 
         {/* Demo video */}
-        <div className="mx-3 my-7 shadow-[10px_-5px_50px_-5px] shadow-blue-200">
+        <div className="my-5 w-full max-w-5xl px-1 sm:my-7">
           <video
-            className="shadow-[20px_20px_rgba(255,255,255)]"
+            className="max-h-[min(50vh,420px)] w-full rounded-md object-cover shadow-[0_12px_40px_rgba(59,130,246,0.25)] sm:max-h-none"
             muted
             loop
             autoPlay
             title="Demo Video"
+            playsInline
           >
             <source src={DemoVideo} type="video/mp4" />
           </video>
@@ -123,13 +124,12 @@ const Home = () => {
 
       {/* section 2 */}
       <section className="bg-pure-greys-5 text-richBlack-700">
-        <div className="homepage_bg h-[320px]">
-          {/* Explore full category section */}
-          <div className="mx-auto flex w-11/12 max-w-maxContent flex-col items-center justify-between gap-8">
-            <div className="lg:h-[150px]"></div>
-            <div className="flex flex-row gap-7 text-white lg:mt-8">
+        <div className="homepage_bg min-h-[240px] bg-center bg-no-repeat sm:h-[280px] md:min-h-[320px]">
+          <div className="mx-auto flex w-11/12 max-w-maxContent min-w-0 flex-col items-center justify-between gap-6 py-8 sm:gap-8 ">
+            <div className="w-full min-h-0 sm:min-h-0 lg:min-h-[100px] xl:min-h-[150px]" />
+            <div className="mt-auto flex w-full max-w-sm flex-col items-stretch gap-3 text-center text-white min-[500px]:max-w-none min-[500px]:flex-row min-[500px]:flex-wrap min-[500px]:items-center min-[500px]:justify-center min-[500px]:gap-5 lg:mt-8 lg:gap-7">
               <CTAButton active={true} linkTo={"/signup"}>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center justify-center gap-2">
                   Explore Full Catalog
                   <FaArrowRight />
                 </div>
@@ -141,10 +141,9 @@ const Home = () => {
           </div>
         </div>
 
-        <div className="mx-auto flex w-11/12 max-w-maxContent flex-col items-center justify-between gap-8 ">
-          {/* Job that is in Demand - Section 1 */}
-          <div className="mb-10 mt-[-100px] flex flex-col justify-between gap-7 lg:mt-20 lg:flex-row lg:gap-0">
-            <div className="text-4xl font-semibold lg:w-[45%] ">
+        <div className="mx-auto flex w-11/12 max-w-maxContent min-w-0 flex-col items-center justify-between gap-8">
+          <div className="mb-10 mt-[-2.5rem] flex w-full min-w-0 flex-col justify-between gap-7 sm:mt-[-3rem] sm:pt-0 md:mt-[-4.5rem] lg:mt-4 lg:min-h-0 lg:flex-row lg:gap-0">
+            <div className="text-2xl font-semibold sm:text-3xl lg:text-4xl lg:w-[45%]">
               Get the skills you need for a{" "}
               <HighlightText text={"job that is in demand."} />
             </div>
@@ -169,12 +168,10 @@ const Home = () => {
       </section>
 
       {/* Section 3 */}
-      <div className="relative mx-auto my-20 flex w-11/12 max-w-maxContent flex-col items-center justify-between gap-8 bg-richBlack-900 text-white">
-        {/* Become a instructor section */}
+      <div className="relative mx-auto my-12 flex w-11/12 max-w-maxContent min-w-0 flex-col items-center justify-between gap-8 bg-richBlack-900 px-1 text-white sm:my-20">
         <InstructorSection />
 
-        {/* Reviews from Other Learner */}
-        <h2 className="mt-8 text-center text-4xl font-semibold">
+        <h2 className="mt-4 w-full min-w-0 text-center text-2xl font-semibold sm:mt-8 sm:text-3xl md:text-4xl">
           Reviews from other learners
         </h2>
         <div className="w-full">

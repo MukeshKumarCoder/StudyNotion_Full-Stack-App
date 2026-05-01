@@ -15,9 +15,11 @@ const RenderTotalAmount = () => {
     buyCourse(token, courses, user, navigate, dispatch);
   };
   return (
-    <div className="min-w-[280px] rounded-md border-[1px] border-richBlack-700 bg-richBlack-800 p-6">
+    <div className="w-full min-w-0 max-w-full rounded-md border border-richBlack-700 bg-richBlack-800 p-4 sm:p-6 lg:sticky lg:top-4 lg:min-w-[280px] lg:max-w-sm lg:shrink-0">
       <p className="mb-1 text-sm font-medium text-richBlack-300">Total:</p>
-      <p className="mb-6 text-3xl font-medium text-yellow-100">₹ {total}</p>
+      <p className="mb-4 text-2xl font-medium text-yellow-100 sm:mb-6 sm:text-3xl">
+        ₹ {total}
+      </p>
       <IconBtn
         text="Buy Now"
         onclick={handleBuyCourse}

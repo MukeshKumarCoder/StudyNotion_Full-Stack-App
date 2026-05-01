@@ -1,4 +1,3 @@
-import React from "react";
 import { FaArrowRight } from "react-icons/fa";
 import { TypeAnimation } from "react-type-animation";
 import CTAButton from "./CTAButton";
@@ -16,19 +15,16 @@ const codeBlocks = ({
   
   return (
     <div
-      className={`flex ${position} my-20 justify-between flex-col lg:gap-10 gap-10`}
+      className={`my-12 flex w-full min-w-0 max-w-full flex-col justify-between gap-8 sm:my-16 md:my-20 lg:gap-10 ${position}`}
     >
-      {/* section 1 */}
-      <div className="flex w-[100%] flex-col gap-8 lg:w-[50%]">
+      <div className="flex w-full min-w-0 max-w-full flex-col gap-6 sm:gap-8 lg:max-w-[50%]">
         {heading}
 
-        {/* Sub Heading */}
-        <div className="-mt-3 w-[85%] text-base font-bold text-richBlack-300">
+        <div className="-mt-1 w-full max-w-prose text-sm font-bold text-richBlack-300 sm:-mt-2 sm:text-base">
           {subHeading}
         </div>
 
-        {/* Button Group */}
-        <div className="mt-7 flex gap-7">
+        <div className="mt-2 flex w-full min-w-0 max-w-sm flex-col gap-3 sm:mt-5 sm:max-w-none min-[480px]:flex-row min-[480px]:flex-wrap min-[480px]:items-center min-[480px]:gap-5 min-[480px]:gap-7">
           <CTAButton active={ctaBtn1.active} linkTo={ctaBtn1.link}>
             <div className="flex items-center gap-2">
               {ctaBtn1.btnText}
@@ -42,7 +38,7 @@ const codeBlocks = ({
       </div>
 
       {/* Section 2 */}
-      <div className="code-border relative flex h-fit w-[100%] flex-row py-3 text-[10px] leading-[18px] sm:text-sm sm:leading-6 lg:w-[470px]">
+      <div className="code-border relative flex h-fit w-full min-w-0 max-w-full flex-row overflow-x-auto py-3 text-[10px] leading-[18px] sm:max-w-2xl sm:text-sm sm:leading-6 lg:max-w-[min(100%,470px)] lg:shrink-0">
         {backgroundGradient}
         {/* Indexing */}
         <div className="flex w-[10%] select-none   flex-col text-center font-inter font-bold text-richBlack-400 ">

@@ -10,102 +10,112 @@ import LearningGrid from "../components/core/AboutPage/LearningGrid";
 
 const About = () => {
   return (
-    <div>
-      <section className="bg-richBlack-700">
-        <div className="relative mx-auto flex w-11/12 max-w-maxContent flex-col justify-between gap-10 text-center text-white">
-          <header className="mx-auto py-20 text-4xl font-semibold lg:w-[70%]">
-            Driving Innovation in Online Education for a
-            <HighlightText text={"Brighter Future"} />
-            <p className="mx-auto mt-3 text-center text-base font-medium text-richBlack-300 lg:w-[95%]">
-              Study Notion is at the forefront of driving innovation in online
-              education. We're passionate about creating a brighter future by
-              offering cutting-edge courses, leveraging emerging technologies,
-              and nurturing a vibrant learning community.
-            </p>
-          </header>
-          <div className="sm:h-[70px] lg:h-[150px]"></div>
-          <div className="absolute bottom-0 left-[50%] grid w-[100%] translate-x-[-50%] translate-y-[30%] grid-cols-3 gap-3 lg:gap-5">
-            <img src={BannerImage1} alt="" loading="lazy" />
-            <img src={BannerImage2} alt="" loading="lazy" />
-            <img src={BannerImage3} alt="" loading="lazy" />
+    <div className="w-full overflow-x-hidden">
+      {/* Hero Section */}
+      <section className="bg-richBlack-700 text-white">
+        <div className="mx-auto w-11/12 max-w-6xl text-center py-10">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-semibold">
+            Driving Innovation in Online Education for a{" "}
+            <HighlightText text="Brighter Future" />
+          </h1>
+
+          <p className="mt-4 text-sm sm:text-base text-richBlack-300 max-w-2xl mx-auto">
+            Study Notion is at the forefront of driving innovation in online
+            education. We're passionate about creating a brighter future by
+            offering cutting-edge courses and nurturing a vibrant learning
+            community.
+          </p>
+
+          {/* Images */}
+          <div className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-4">
+            {[BannerImage1, BannerImage2, BannerImage3].map((img, i) => (
+              <img
+                key={i}
+                src={img}
+                alt="about"
+                className="w-full h-48 sm:h-56 md:h-64 object-cover rounded-lg shadow-lg"
+                loading="lazy"
+              />
+            ))}
           </div>
         </div>
       </section>
-      <section className="border-b border-richBlack-700">
-        <div className="mx-auto flex w-11/12 max-w-maxContent flex-col justify-between gap-10 text-richBlack-500">
-          <div className="h-[100px] "></div>
+
+      {/* Quote Section */}
+      <section className="border-b border-richBlack-700 py-6">
+        <div className="mx-auto w-11/12 max-w-6xl">
           <Quote />
         </div>
       </section>
-      <section>
-        <div className="mx-auto flex w-11/12 max-w-maxContent flex-col justify-between gap-10 text-richBlack-500">
-          <div className="flex flex-col items-center gap-10 lg:flex-row justify-between">
-            <div className="my-24 flex lg:w-[50%] flex-col gap-10">
-              <h2 className="bg-gradient-to-br from-[#833AB4] via-[#FD1D1D] to-[#FCB045] bg-clip-text text-4xl font-semibold text-transparent lg:w-[70%] ">
-                Our Founding Story
-              </h2>
-              <p className="text-base font-medium text-richBlack-300 lg:w-[95%]">
-                Our e-learning platform was born out of a shared vision and
-                passion for transforming education. It all began with a group of
-                educators, technologists, and lifelong learners who recognized
-                the need for accessible, flexible, and high-quality learning
-                opportunities in a rapidly evolving digital world.
-              </p>
-              <p className="text-base font-medium text-richBlack-300 lg:w-[95%]">
-                As experienced educators ourselves, we witnessed firsthand the
-                limitations and challenges of traditional education systems. We
-                believed that education should not be confined to the walls of a
-                classroom or restricted by geographical boundaries. We
-                envisioned a platform that could bridge these gaps and empower
-                individuals from all walks of life to unlock their full
-                potential.
-              </p>
-            </div>
 
-            <div>
-              <img
-                src={FoundingStory}
-                alt="Founding Story Illustration"
-                loading="lazy"
-                className="shadow-[0_0_20px_0] shadow-[#FC6767]"
-              />
-            </div>
+      {/* Founding Story */}
+      <section className="py-6">
+        <div className="mx-auto w-11/12 max-w-6xl flex flex-col lg:flex-row items-center gap-10">
+          {/* Text */}
+          <div className="flex-1 space-y-5">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold bg-gradient-to-r from-[#833AB4] via-[#FD1D1D] to-[#FCB045] text-transparent bg-clip-text">
+              Our Founding Story
+            </h2>
+
+            <p className="text-sm sm:text-base text-richBlack-300">
+              Our e-learning platform was born out of a shared vision to make
+              education accessible and flexible for everyone.
+            </p>
+
+            <p className="text-sm sm:text-base text-richBlack-300">
+              We believed that education should not be confined to classrooms
+              and aimed to build a platform that empowers learners globally.
+            </p>
           </div>
-          <div className="flex flex-col items-center lg:gap-10 lg:flex-row justify-between">
-            <div className="my-24 flex lg:w-[40%] flex-col gap-10">
-              <h2 className="bg-gradient-to-b from-[#FF512F] to-[#F09819] bg-clip-text text-4xl font-semibold text-transparent lg:w-[70%] ">
-                Our Vision
-              </h2>
-              <p className="text-base font-medium text-richBlack-300 lg:w-[95%]">
-                With this vision in mind, we set out on a journey to create an
-                e-learning platform that would revolutionize the way people
-                learn. Our team of dedicated experts worked tirelessly to
-                develop a robust and intuitive platform that combines
-                cutting-edge technology with engaging content, fostering a
-                dynamic and interactive learning experience.
-              </p>
-            </div>
-            <div className="my-24 flex lg:w-[40%] flex-col gap-10">
-              <h2 className="bg-gradient-to-b from-[#1FA2FF] via-[#12D8FA] to-[#A6FFCB] text-transparent bg-clip-text text-4xl font-semibold lg:w-[70%] ">
-                Our Mission
-              </h2>
-              <p className="text-base font-medium text-richBlack-300 lg:w-[95%]">
-                Our mission goes beyond just delivering courses online. We
-                wanted to create a vibrant community of learners, where
-                individuals can connect, collaborate, and learn from one
-                another. We believe that knowledge thrives in an environment of
-                sharing and dialogue, and we foster this spirit of collaboration
-                through forums, live sessions, and networking opportunities.
-              </p>
-            </div>
+
+          {/* Image */}
+          <div className="flex-1">
+            <img
+              src={FoundingStory}
+              alt="Founding Story"
+              className="w-full max-w-md mx-auto lg:max-w-full object-contain shadow-xl"
+            />
           </div>
         </div>
       </section>
-      <StatsComponent />
-      <section className="mx-auto mt-20 flex w-11/12 max-w-maxContent flex-col justify-between gap-10 text-white">
-        <LearningGrid />
+
+      {/* Vision & Mission */}
+      <section className="py-10">
+        <div className="mx-auto w-11/12 max-w-6xl grid md:grid-cols-2 gap-10">
+          {/* Vision */}
+          <div className="space-y-4">
+            <h2 className="text-2xl sm:text-3xl font-semibold bg-gradient-to-r from-[#FF512F] to-[#F09819] text-transparent bg-clip-text">
+              Our Vision
+            </h2>
+            <p className="text-sm sm:text-base text-richBlack-300">
+              We aim to revolutionize learning through technology and create an
+              engaging and accessible learning experience.
+            </p>
+          </div>
+
+          {/* Mission */}
+          <div className="space-y-4">
+            <h2 className="text-2xl sm:text-3xl font-semibold bg-gradient-to-r from-[#1FA2FF] via-[#12D8FA] to-[#A6FFCB] text-transparent bg-clip-text">
+              Our Mission
+            </h2>
+            <p className="text-sm sm:text-base text-richBlack-300">
+              Our mission is to build a collaborative learning community where
+              users can grow, connect, and share knowledge.
+            </p>
+          </div>
+        </div>
       </section>
-      {/* <Footer /> */}
+
+      {/* Stats */}
+      <StatsComponent />
+
+      {/* Learning Grid */}
+      <section className="py-8">
+        <div className="mx-auto w-11/12 max-w-6xl">
+          <LearningGrid />
+        </div>
+      </section>
+
       <Footer />
     </div>
   );

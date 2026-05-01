@@ -1,4 +1,3 @@
-import React from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -40,7 +39,7 @@ const EditProfile = () => {
     <>
       <form onSubmit={handleSubmit(submitProfileForm)}>
         {/* Profile Information */}
-        <div className="my-10 flex flex-col gap-y-6 rounded-md border-[1px] border-richBlack-700 bg-richBlack-800 p-8 px-12">
+        <div className="my-6 flex flex-col gap-y-5 rounded-md border border-richBlack-700 bg-richBlack-800 p-4 sm:my-8 sm:gap-y-6 sm:p-6 md:my-10 md:p-8 md:px-10 lg:px-12">
           <h2 className="text-lg font-semibold text-richBlack-5">
             Profile Information
           </h2>
@@ -184,12 +183,13 @@ const EditProfile = () => {
           </div>
         </div>
 
-        <div className="flex justify-end gap-2">
+        <div className="mt-4 flex w-full min-w-0 flex-col-reverse gap-2 min-[420px]:flex-row min-[420px]:justify-end sm:mt-0">
           <button
+            type="button"
             onClick={() => {
               navigate("/dashboard/my-profile");
             }}
-            className="cursor-pointer rounded-md bg-richBlack-700 py-2 px-5 font-semibold text-richBlack-50"
+            className="w-full cursor-pointer rounded-md bg-richBlack-700 py-2.5 px-4 text-center text-sm font-semibold text-richBlack-50 min-[420px]:w-auto sm:px-5"
           >
             Cancel
           </button>

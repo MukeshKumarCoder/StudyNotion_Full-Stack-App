@@ -191,8 +191,8 @@ const CourseDetails = () => {
       <div className="mx-auto box-content px-4 text-start text-richBlack-5 lg:w-[1260px]">
         <div className="mx-auto max-w-maxContentTab lg:mx-0 xl:max-w-[810px]">
           {/* What will you learn section */}
-          <div className="my-8 border border-richBlack-600 p-8">
-            <p className="text-3xl font-semibold">What you'll learn</p>
+          <div className="my-6 border border-richBlack-600 p-4 sm:my-8 sm:p-6 md:p-8">
+            <p className="text-xl font-semibold sm:text-2xl md:text-3xl">What you'll learn</p>
             <div className="mt-5">
               <ReactMarkdown>{whatYouWillLearn}</ReactMarkdown>
             </div>

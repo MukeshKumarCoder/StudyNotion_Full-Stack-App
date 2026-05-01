@@ -9,28 +9,28 @@ const RenderCartCourses = () => {
   const dispatch = useDispatch();
 
   return (
-    <div className="flex flex-1 flex-col">
+    <div className="flex min-w-0 flex-1 flex-col">
       {cart.map((course, indx) => (
         <div
           key={course._id}
-          className={`flex w-full flex-wrap items-start justify-between gap-6 ${
-            indx !== cart.length - 1 && "border-b border-b-richBlack-400 pb-6"
+          className={`flex w-full min-w-0 flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-start sm:justify-between sm:gap-6 ${
+            indx !== cart.length - 1 && "border-b border-richBlack-400 pb-6"
           } ${indx !== 0 && "mt-6"} `}
         >
-          <div className="flex flex-1 flex-col gap-4 xl:flex-row">
+          <div className="flex min-w-0 flex-1 flex-col gap-4 sm:flex-row sm:items-start">
             <img
               src={course?.thumbnail}
               alt={course?.courseName}
-              className="h-[148px] w-[220px] rounded-lg object-cover"
+              className="aspect-[220/148] h-auto w-full max-w-[220px] shrink-0 rounded-lg object-cover sm:h-[148px] sm:w-[220px]"
             />
-            <div className="flex flex-col space-y-1">
-              <p className="text-lg font-medium text-richBlack-5">
+            <div className="flex min-w-0 flex-1 flex-col space-y-1">
+              <p className="break-words text-base font-medium text-richBlack-5 sm:text-lg">
                 {course?.courseName}
               </p>
               <p className="text-sm text-richBlack-300">
                 {course?.category?.name}
               </p>
-              <div className="flex items-center gap-2">
+              <div className="flex flex-wrap items-center gap-2">
                 <span className="text-yellow-5">4.5</span>
                 <ReactStars
                   count={5}
@@ -47,15 +47,16 @@ const RenderCartCourses = () => {
               </div>
             </div>
           </div>
-          <div className="flex flex-col items-end space-y-2">
+          <div className="flex w-full min-w-0 flex-col gap-2 sm:w-auto sm:max-w-[12rem] sm:items-end sm:space-y-2">
             <button
+              type="button"
               onClick={() => dispatch(removeFromCart(course._id))}
-              className="flex items-center gap-x-1 rounded-md border border-richBlack-600 bg-richBlack-700 py-3 px-[12px] text-pink-200"
+              className="flex w-full items-center justify-center gap-x-1 rounded-md border border-richBlack-600 bg-richBlack-700 py-2.5 px-3 text-sm text-pink-200 sm:w-auto sm:py-3 sm:px-3"
             >
               <RiDeleteBin6Line />
               <span>Remove</span>
             </button>
-            <p className="mb-6 text-3xl font-medium text-yellow-100">
+            <p className="text-2xl font-medium text-yellow-100 sm:mb-2 sm:text-3xl">
               ₹ {course?.price}
             </p>
           </div>

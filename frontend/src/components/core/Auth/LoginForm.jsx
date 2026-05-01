@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { SignInButton } from "@clerk/clerk-react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { login } from "../../../services/operations/authAPI";
+
+const clerkEnabled = Boolean(import.meta.env.VITE_CLERK_PUBLISHABLE_KEY);
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -86,7 +89,7 @@ const LoginForm = () => {
         <div className="flex justify-between items-center mt-2 px-2">
           <Link to="/signup">
             <p className="mt-1 ml-auto max-w-max text-xs text-blue-100 border-b border-richBlack-25 pb-[1px] ">
-              Don't have an Account
+              {"Don't have an Account"}
             </p>
           </Link>
           <Link to="/forgot-password">
@@ -102,6 +105,30 @@ const LoginForm = () => {
       >
         Login
       </button>
+
+      {clerkEnabled ? (
+        <>
+          <div className="relative my-6 flex items-center justify-center">
+            <div className="absolute h-px w-full bg-richBlack-700" />
+            <span className="relative bg-richBlack-900 px-3 text-xs text-richBlack-100">
+              or
+            </span>
+          </div>
+          <SignInButton mode="modal">
+            <button
+              type="button"
+              className="flex w-full items-center justify-center gap-x-2 rounded-[8px] border border-richBlack-600 bg-richBlack-800 py-[10px] px-[12px] font-medium text-richBlack-5 transition hover:bg-richBlack-700"
+            >
+              <img
+                src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+                alt=""
+                className="h-5 w-5"
+              />
+              Continue with Google
+            </button>
+          </SignInButton>
+        </>
+      ) : null}
     </form>
   );
 };
