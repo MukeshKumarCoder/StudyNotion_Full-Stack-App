@@ -31,7 +31,10 @@ const ReviewSlider = () => {
     (async () => {
       const { data } = await apiConnector(
         "GET",
-        ratingsEndpoints.REVIEWS_DETAILS_API
+        ratingsEndpoints.REVIEWS_DETAILS_API,
+        null,
+        null,
+        { page: 1, limit: 100 }
       );
 
       if (data?.success) {

@@ -24,7 +24,7 @@ import {
 import { COURSE_STATUS } from "../../../../utils/constants";
 import ConfirmationModal from "../../../common/ConfirmationModal";
 
-const CoursesTable = ({ courses, setCourses }) => {
+const CoursesTable = ({ courses, setCourses, listPage = 1, pageSize = 10 }) => {
   const navigate = useNavigate();
   const { token } = useSelector((state) => state.auth);
 
@@ -39,10 +39,13 @@ const CoursesTable = ({ courses, setCourses }) => {
 
     await deleteCourse({ courseId }, token);
 
-    const result = await fetchInstructorCourses(token);
+    const result = await fetchInstructorCourses(token, {
+      page: listPage,
+      limit: pageSize,
+    });
 
-    if (result) {
-      setCourses(result);
+    if (result?.courses) {
+      setCourses(result.courses);
     }
 
     setConfirmationModal(null);

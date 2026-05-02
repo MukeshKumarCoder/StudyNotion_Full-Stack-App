@@ -13,20 +13,21 @@ const {
 } = require("../controllers/ResetPassword");
 
 const { auth } = require("../middlewares/auth");
+const { authLimiter } = require("../middlewares/rateLimit");
 
 // Auth Routes
-router.post("/login", login);
-router.post("/signup", signUp);
-router.post("/send-otp", sendOTP);
-router.post("/clerk-sync", clerkSync);
+router.post("/login", authLimiter, login);
+router.post("/signup", authLimiter, signUp);
+router.post("/send-otp", authLimiter, sendOTP);
+router.post("/clerk-sync", authLimiter, clerkSync);
 
 // Change password (Authenticated)
 router.post("/change-password", auth, changePassword);
 
 // Route for generating a reset password token
-router.post("/reset-password-token", resetPasswordToken);
+router.post("/reset-password-token", authLimiter, resetPasswordToken);
 
 // Route for resetting user's password after verification
-router.post("/reset-password", resetPassword);
+router.post("/reset-password", authLimiter, resetPassword);
 
 module.exports = router;

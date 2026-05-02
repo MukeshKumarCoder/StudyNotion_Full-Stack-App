@@ -1,4 +1,8 @@
 const Category = require("../models/Category");
+const {
+  parsePaginationQuery,
+  paginationMeta,
+} = require("../utils/pagination");
 
 function getRandomInt(max) {
   return Math.floor(Math.random() * max);
@@ -37,14 +41,28 @@ exports.createCategory = async (req, res) => {
 // show all categories
 exports.showAllCategories = async (req, res) => {
   try {
-    const allCategories = await Category.find(
-      {},
-      { name: true, description: true }
-    );
+    const { page, limit, skip } = parsePaginationQuery(req, {
+      defaultPage: 1,
+      defaultLimit: 50,
+      maxLimit: 100,
+    });
+
+    const filter = {};
+    const projection = { name: true, description: true };
+
+    const [totalItems, allCategories] = await Promise.all([
+      Category.countDocuments(filter),
+      Category.find(filter, projection)
+        .sort({ name: 1 })
+        .skip(skip)
+        .limit(limit),
+    ]);
+
     return res.status(200).json({
       success: true,
       message: "All categories fetched successfully",
       data: allCategories,
+      pagination: paginationMeta(totalItems, page, limit),
     });
   } catch (error) {
     return res.status(500).json({
