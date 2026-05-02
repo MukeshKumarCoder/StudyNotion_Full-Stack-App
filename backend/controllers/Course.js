@@ -6,6 +6,10 @@ const User = require("../models/User");
 const CourseProgress = require("../models/CourseProgress");
 const { uploadImageToCloudinary } = require("../utils/imageUploader");
 const { convertSecondsToDuration } = require("../utils/setToDuration");
+const {
+  parsePaginationQuery,
+  paginationMeta,
+} = require("../utils/pagination");
 require("dotenv").config();
 
 // create a new course
@@ -190,22 +194,36 @@ exports.editCourse = async (req, res) => {
 //getAllCourses handler function
 exports.getAllCourse = async (req, res) => {
   try {
-    const allCourses = await Course.find(
-      { status: "Published" },
-      {
-        courseName: true,
-        price: true,
-        thumbnail: true,
-        instructor: true,
-        ratingAndReviews: true,
-        studentEnrolled: true,
-      }
-    ).populate("instructor");
+    const { page, limit, skip } = parsePaginationQuery(req, {
+      defaultPage: 1,
+      defaultLimit: 12,
+      maxLimit: 50,
+    });
+
+    const filter = { status: "Published" };
+    const projection = {
+      courseName: true,
+      price: true,
+      thumbnail: true,
+      instructor: true,
+      ratingAndReviews: true,
+      studentEnrolled: true,
+    };
+
+    const [totalItems, allCourses] = await Promise.all([
+      Course.countDocuments(filter),
+      Course.find(filter, projection)
+        .populate("instructor")
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit),
+    ]);
 
     return res.status(200).json({
       success: true,
       message: "All courses fetched successfully",
       data: allCourses,
+      pagination: paginationMeta(totalItems, page, limit),
     });
   } catch (error) {
     // console.log(error);
@@ -354,17 +372,27 @@ exports.getInstructorCourses = async (req, res) => {
     // Get the instructor ID from the authenticated user or request body
     const instructorId = req.user.id;
 
-    // Find all courses belonging to the instructor
-    const instructorCourses = await Course.find({
-      instructor: instructorId,
-    })
-      .sort({ createdAt: -1 })
-      .populate({
-        path: "courseContent",
-        populate: {
-          path: "subSection",
-        },
-      });
+    const { page, limit, skip } = parsePaginationQuery(req, {
+      defaultPage: 1,
+      defaultLimit: 10,
+      maxLimit: 50,
+    });
+
+    const filter = { instructor: instructorId };
+
+    const [totalItems, instructorCourses] = await Promise.all([
+      Course.countDocuments(filter),
+      Course.find(filter)
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit)
+        .populate({
+          path: "courseContent",
+          populate: {
+            path: "subSection",
+          },
+        }),
+    ]);
 
     // Calculate totalDuration for each course
     const coursesWithDuration = instructorCourses.map((course) => {
@@ -385,6 +413,7 @@ exports.getInstructorCourses = async (req, res) => {
     return res.status(200).json({
       success: true,
       data: coursesWithDuration,
+      pagination: paginationMeta(totalItems, page, limit),
     });
   } catch (error) {
     console.error(error);

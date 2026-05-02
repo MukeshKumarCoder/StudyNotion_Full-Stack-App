@@ -25,6 +25,11 @@ StudyNotion is a versatile and highly scalable **ed-tech platform** designed to 
 - **Search & Discovery**: Find courses easily through categories.
 - **Responsive Design**: Fully optimized for mobile, tablet, and desktop views.
 
+### 🔒 API Security & Performance
+- **Helmet**: Sets secure HTTP headers for the Express API (with cross-origin resource policy aligned for CORS).
+- **Rate limiting**: Global limit on `/api` routes; stricter limits on authentication routes (login, signup, OTP, password reset, Clerk sync).
+- **Pagination**: List endpoints support `?page=` and `?limit=` and return a `pagination` object (`currentPage`, `totalPages`, `totalItems`, `hasNextPage`, `hasPrevPage`). The instructor “My Courses” view includes previous/next controls.
+
 ---
 
 ## 🛠️ Tech Stack
@@ -43,6 +48,7 @@ StudyNotion is a versatile and highly scalable **ed-tech platform** designed to 
 - **Database**: MongoDB (Mongoose ODM)
 - **Authentication**: JWT & Bcrypt (Optional Clerk integration)
 - **Communication**: Nodemailer (via Gmail)
+- **Security / middleware**: Helmet, express-rate-limit (`trust proxy` enabled for reverse proxies such as Vercel)
 
 ### Services & Tools
 - **Payment Gateway**: Razorpay
@@ -65,9 +71,10 @@ StudyNotion_Full-Stack-App/
 ├── backend/              # Node/Express Backend
 │   ├── config/           # Database and Cloud configurations
 │   ├── controllers/      # Request handlers
+│   ├── middlewares/      # Auth, rate limiting
 │   ├── models/           # Mongoose schemas
 │   ├── routes/           # API endpoints
-│   └── utils/            # Helper functions
+│   └── utils/            # Helpers (e.g. pagination, image upload)
 └── README.md             # Project documentation
 ```
 
@@ -108,6 +115,18 @@ cd StudyNotion_Full-Stack-App
    ```bash
    npm run dev
    ```
+
+#### Paginated list endpoints (examples)
+Query parameters are optional; sensible defaults apply if omitted.
+
+| Endpoint | Default `limit` (max) | Notes |
+| -------- | -------------------- | ----- |
+| `GET /api/course/getAllCourses` | 12 (50) | Published courses, includes `pagination` |
+| `GET /api/course/getInstructorCourses` | 10 (50) | Requires `Authorization: Bearer <token>` |
+| `GET /api/course/showAllCategories` | 50 (100) | |
+| `GET /api/course/getReviews` | 30 (100) | |
+
+Example: `GET /api/course/getAllCourses?page=2&limit=12`
 
 ### 3️⃣ Frontend Setup
 1. Navigate to the frontend folder:

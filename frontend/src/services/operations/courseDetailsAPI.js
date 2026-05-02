@@ -23,20 +23,31 @@ const {
   UPDATE_LAST_VIEWED_LECTURE_API,
 } = courseEndpoints;
 
-// get all courses
-export const getAllCourses = async () => {
+// get all courses (paginated: ?page=&limit=)
+export const getAllCourses = async (pagination = {}) => {
+  const { page = 1, limit = 12 } = pagination;
   const toastId = toast.loading("Loading...");
-  let result = [];
+  let result = { courses: [], pagination: null };
   try {
-    const response = await apiConnector("GET", GET_ALL_COURSE_API);
+    const response = await apiConnector(
+      "GET",
+      GET_ALL_COURSE_API,
+      null,
+      null,
+      { page, limit }
+    );
     if (!response?.data?.success) {
       throw new Error("Could Not Fetch Course");
     }
-    result = response?.data?.data;
+    result = {
+      courses: response?.data?.data ?? [],
+      pagination: response?.data?.pagination ?? null,
+    };
   } catch (error) {
     toast.error(error.message);
   }
   toast.dismiss(toastId);
+  return result;
 };
 
 // fetch course details
@@ -63,7 +74,13 @@ export const fetchCourseCategories = async () => {
   const toastId = toast.loading("Loading...");
   let result = [];
   try {
-    const response = await apiConnector("GET", COURSE_CATEGORIES_API);
+    const response = await apiConnector(
+      "GET",
+      COURSE_CATEGORIES_API,
+      null,
+      null,
+      { page: 1, limit: 100 }
+    );
     if (!response?.data?.success) {
       throw new Error("Could Not Fetch Course Categories");
     }
@@ -242,9 +259,10 @@ export const deleteSubSection = async (data, token) => {
   return result;
 };
 
-// fetching all courses under a specific instructor
-export const fetchInstructorCourses = async (token) => {
-  let result = [];
+// fetching all courses under a specific instructor (paginated: ?page=&limit=)
+export const fetchInstructorCourses = async (token, pagination = {}) => {
+  const { page = 1, limit = 10 } = pagination;
+  let result = { courses: [], pagination: null };
   const toastId = toast.loading("Loading...");
   try {
     const response = await apiConnector(
@@ -253,13 +271,17 @@ export const fetchInstructorCourses = async (token) => {
       null,
       {
         Authorization: `Bearer ${token}`,
-      }
+      },
+      { page, limit }
     );
 
     if (!response?.data?.success) {
       throw new Error("Could Not Fetch Instructor Courses");
     }
-    result = response?.data?.data;
+    result = {
+      courses: response?.data?.data ?? [],
+      pagination: response?.data?.pagination ?? null,
+    };
   } catch (error) {
     toast.error(error.message);
   }

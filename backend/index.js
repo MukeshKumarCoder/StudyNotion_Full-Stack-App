@@ -1,6 +1,8 @@
 const express = require("express");
+const helmet = require("helmet");
 const app = express();
 
+const { apiLimiter } = require("./middlewares/rateLimit");
 const userRoutes = require("./routes/User");
 const profileRoutes = require("./routes/Profile");
 const paymentRoutes = require("./routes/Payments");
@@ -17,10 +19,18 @@ require("dotenv").config();
 
 const PORT = process.env.PORT || 4000;
 
+// Behind reverse proxies (e.g. Vercel) so rate limiting and IPs are correct
+app.set("trust proxy", 1);
+
 //database connect
 database.connect();
 
 //middlewares
+app.use(
+  helmet({
+    crossOriginResourcePolicy: { policy: "cross-origin" },
+  })
+);
 app.use(express.json());
 app.use(cookieParser());
 app.use(
@@ -41,6 +51,9 @@ app.use(
 
 //cloudinary connection
 cloudinaryConnect();
+
+// Rate limiting for API routes
+app.use("/api", apiLimiter);
 
 // Routes
 app.use("/api/auth", userRoutes);

@@ -10,20 +10,24 @@ const Instructor = () => {
   const [loading, setLoading] = useState(false);
   const [instructorData, setInstructorData] = useState(null);
   const [courses, setCourses] = useState([]);
+  const [totalCoursesCount, setTotalCoursesCount] = useState(0);
 
   useEffect(() => {
     (async () => {
       setLoading(true);
       const instructorApiData = await getInstructorData(token);
-      const result = await fetchInstructorCourses(token);
+      const result = await fetchInstructorCourses(token, { page: 1, limit: 10 });
       // console.log(instructorApiData);
       if (instructorApiData.length) setInstructorData(instructorApiData);
-      if (result) {
-        setCourses(result);
+      if (result?.courses) {
+        setCourses(result.courses);
+      }
+      if (result?.pagination?.totalItems != null) {
+        setTotalCoursesCount(result.pagination.totalItems);
       }
       setLoading(false);
     })();
-  }, []);
+  }, [token]);
 
   const totalAmount = instructorData?.reduce(
     (acc, curr) => acc + curr.totalAmountGenerated,
@@ -47,7 +51,7 @@ const Instructor = () => {
       </div>
       {loading ? (
         <div className="spinner"></div>
-      ) : courses.length > 0 ? (
+      ) : totalCoursesCount > 0 ? (
         <div>
           <div className="my-4 flex h-[450px] space-x-4">
             {/* Render chart / graph */}
@@ -68,7 +72,7 @@ const Instructor = () => {
                 <div>
                   <p className="text-lg text-richBlack-200">Total Courses</p>
                   <p className="text-3xl font-semibold text-richBlack-50">
-                    {courses.length}
+                    {totalCoursesCount}
                   </p>
                 </div>
                 <div>

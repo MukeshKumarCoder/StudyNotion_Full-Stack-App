@@ -1,6 +1,10 @@
 const RatingAndReview = require("../models/RatingAndReview");
 const Course = require("../models/Course");
 const mongoose = require("mongoose");
+const {
+  parsePaginationQuery,
+  paginationMeta,
+} = require("../utils/pagination");
 
 // Create Rating
 exports.createRating = async (req, res) => {
@@ -96,23 +100,37 @@ exports.getAverageRating = async (req, res) => {
 //get All Rating And Reviews
 exports.getAllRating = async (req, res) => {
   try {
-    const allReviews = await RatingAndReview.find({})
-      .sort({ rating: "desc" })
-      .populate({
-        path: "user",
-        select: "firstName lastName email image",
-      })
-      .populate({
-        path: "course",
-        select: "courseName",
-      })
-      .exec();
+    const { page, limit, skip } = parsePaginationQuery(req, {
+      defaultPage: 1,
+      defaultLimit: 30,
+      maxLimit: 100,
+    });
+
+    const filter = {};
+
+    const [totalItems, allReviews] = await Promise.all([
+      RatingAndReview.countDocuments(filter),
+      RatingAndReview.find(filter)
+        .sort({ rating: "desc" })
+        .skip(skip)
+        .limit(limit)
+        .populate({
+          path: "user",
+          select: "firstName lastName email image",
+        })
+        .populate({
+          path: "course",
+          select: "courseName",
+        })
+        .exec(),
+    ]);
 
     // return response
     return res.status(200).json({
       success: true,
       message: "All reviews fetched successfully",
       data: allReviews,
+      pagination: paginationMeta(totalItems, page, limit),
     });
   } catch (error) {
     console.log(error);
