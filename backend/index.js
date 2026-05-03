@@ -35,10 +35,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin:[
-  "http://localhost:5173",
-  "https://studynotion21.netlify.app"
-],
+  "https://studynotion21.netlify.app/"
     credentials: true,
   })
 );
