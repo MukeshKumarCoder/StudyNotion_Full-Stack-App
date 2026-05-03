@@ -18,8 +18,6 @@ const fileUpload = require("express-fileupload");
 require("dotenv").config();
 
 const PORT = process.env.PORT || 4000;
-
-// Behind reverse proxies (e.g. Vercel) so rate limiting and IPs are correct
 app.set("trust proxy", 1);
 
 //database connect
