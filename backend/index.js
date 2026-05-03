@@ -35,7 +35,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-  "https://studynotion21.netlify.app/",
+  origin: "https://studynotion21.netlify.app/",
     credentials: true
   })
 );
